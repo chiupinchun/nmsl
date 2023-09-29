@@ -2,13 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, Inject } f
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ConfigModule } from 'src/config/config.module';
 
 @Controller('user')
 export class UserController {
   constructor(
-    private readonly userService: UserService,
-    @Inject('Config') private readonly config: ConfigModule
+    private readonly userService: UserService
   ) { }
 
   @Post()
@@ -27,8 +25,7 @@ export class UserController {
 
   @Get()
   findAll() {
-    return this.config;
-    // return this.userService.findAll();
+    return this.userService.findAll();
   }
 
   @Get(':id')
