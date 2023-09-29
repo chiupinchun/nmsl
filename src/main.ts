@@ -6,6 +6,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { Response } from './global/response';
 import { ErrorHandler } from './global/onerror';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -28,6 +29,10 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new Response());
   app.useGlobalFilters(new ErrorHandler());
+
+  const swaggerOpts = new DocumentBuilder().setTitle('NMSL').setDescription('檸檬森林api文檔').setVersion('alpha 1.0').build();
+  SwaggerModule.setup('/api-docs', app, SwaggerModule.createDocument(app, swaggerOpts));
+
   await app.listen(3001);
 }
 bootstrap();
