@@ -6,7 +6,7 @@ export class ErrorHandler implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const request = ctx.getRequest<Request>();
     const response = ctx.getResponse<Response>();
-
+    console.log(exception);
     const status = exception.getStatus();
     const exceptionRes = exception.getResponse();
 
@@ -16,7 +16,7 @@ export class ErrorHandler implements ExceptionFilter {
       success: false,
       time: new Date(),
       data: exception.message,
-      status,
+      status: 0,
       path: request.url
     });
   }

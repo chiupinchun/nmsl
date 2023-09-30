@@ -18,14 +18,14 @@ async function bootstrap() {
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTION'],
     credentials: true
   });
-  app.use(session({
-    secret: 'nmsl',
-    rolling: true,
-    name: 'token',
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7
-    }
-  }));
+  // app.use(session({
+  //   secret: 'nmsl',
+  //   rolling: true,
+  //   name: 'token',
+  //   cookie: {
+  //     maxAge: 1000 * 60 * 60 * 24 * 7
+  //   }
+  // }));
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new Response());
   app.useGlobalFilters(new ErrorHandler());

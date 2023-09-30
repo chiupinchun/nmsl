@@ -15,7 +15,7 @@ export class Response<T> implements NestInterceptor {
   ): Observable<ResponseFormat<T>> | Promise<Observable<ResponseFormat<T>>> {
     return next.handle().pipe(map(data => ({
       data,
-      status: 0,
+      status: 1,
       msg: '成功',
       success: true
     })));

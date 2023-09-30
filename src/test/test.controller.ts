@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, UseIntercept
 import { TestService } from './test.service';
 import { CreateTestDto } from './dto/create-test.dto';
 import { UpdateTestDto } from './dto/update-test.dto';
-import { ConfigModule } from 'src/config/config.module';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { File } from 'buffer';
 import { RoleGuard } from './guard/role.guard';
@@ -11,14 +10,8 @@ import { RoleGuard } from './guard/role.guard';
 @Controller('test')
 export class TestController {
   constructor(
-    private readonly testService: TestService,
-    @Inject('Config') private readonly config: ConfigModule
+    private readonly testService: TestService
   ) { }
-
-  @Get('config')
-  getConfig() {
-    return this.config;
-  }
 
   @Post('img')
   @UseInterceptors(FileInterceptor('img'))
