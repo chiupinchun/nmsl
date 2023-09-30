@@ -1,9 +1,7 @@
+import { request } from '@/api/core';
+import { cookies } from 'next/headers';
 import '@/assets/css/global.css';
-import Header from '@/components/header';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,12 +13,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  request('/user').then(res => console.log(res));
+
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Header></Header>
+    <main className='flex justify-center items-center h-screen'>
+      <section className='p-10 w-2/4 border-zinc-500 border-2 rounded'>
         {children}
-      </body>
-    </html>
+      </section>
+    </main>
   );
 }
