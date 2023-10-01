@@ -1,26 +1,15 @@
 import * as VueRouter from 'vue-router';
 
-import Index from '@/views/Index.vue';
-import Gacha from '@/views/Gacha.vue';
-import Card from '@/views/Card.vue';
-import Test from '@/views/Test.vue';
+import Lesson from '@/views/lesson/index.vue';
 
 const routes: VueRouter.RouteRecordRaw[] = [
   {
     path: '/',
-    component: Index
+    redirect: '/lesson'
   },
   {
-    path: '/gacha',
-    component: Gacha
-  },
-  {
-    path: '/card',
-    component: Card
-  },
-  {
-    path: '/test',
-    component: Test
+    path: '/lesson',
+    component: Lesson
   }
 ];
 

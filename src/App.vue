@@ -2,17 +2,17 @@
 import { h } from 'vue';
 import Sidebar from '@/components/Sidebar.vue';
 
-console.log(h('div', '雞雞'))
-
 </script>
 
 <template>
-  <el-container>
-    <el-aside width="200px">
+  <div style="display: flex;">
+    <el-aside style="width: unset">
       <Sidebar />
     </el-aside>
-    <RouterView />
-  </el-container>
+    <main>
+      <RouterView />
+    </main>
+  </div>
 </template>
 
 <style lang="less">
@@ -30,6 +30,11 @@ a {
   text-decoration: none;
 }
 
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .ms-5 {
   margin-left: 1.25rem;
 }
@@ -41,5 +46,18 @@ a {
 
 .mb-3 {
   margin-bottom: 0.75rem;
+}
+
+
+.tool-bar {
+  display: flex;
+  margin: 1rem 0;
+}
+</style>
+
+<style lang="less" scoped>
+main {
+  width: 100%;
+  overflow: hidden;
 }
 </style>

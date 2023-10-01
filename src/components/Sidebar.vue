@@ -1,7 +1,7 @@
 <template>
+  <div :style="{ width: collapse ? '30px' : '150px', transition: '0.5s' }"></div>
   <ul class="sidebar" :class="{ collapse }">
-    <li><router-link to="/gacha">{{ collapse ? '' : '抽倒楣鬼' }}</router-link></li>
-    <li><router-link to="/card">{{ collapse ? '' : '小卡片' }}</router-link></li>
+    <li><router-link to="/lesson">{{ collapse ? '' : '課程編輯' }}</router-link></li>
 
     <span @click="collapse = !collapse" class="collapse">↔</span>
   </ul>
@@ -15,14 +15,16 @@ const collapse = ref(false);
 
 <style lang="less" scoped>
 .sidebar {
-  position: relative;
+  position: fixed;
+  z-index: 100;
+  top: 0;
   height: 100vh;
-  width: 100%;
+  width: 150px;
   background-color: rgb(226, 226, 226);
-  transition: 0.5s;
+  transition: 0.25s;
 
   &.collapse {
-    width: 20%;
+    width: 30px;
   }
 
   li {
