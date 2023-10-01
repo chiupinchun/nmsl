@@ -16,10 +16,10 @@ export default function RootLayout({
   request('/user').then(res => console.log(res));
 
   return (
-    <main className='flex justify-center items-center h-screen'>
-      <section className='p-10 w-2/4 border-zinc-500 border-2 rounded'>
+    <div className='flex justify-center items-center h-screen'>
+      <section className='p-10 w-2/4 border-zinc-500 border-2 rounded shadow-sm shadow-slate-500'>
         {children}
       </section>
-    </main>
+    </div>
   );
 }

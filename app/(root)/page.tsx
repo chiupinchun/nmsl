@@ -9,9 +9,9 @@ export default function Home() {
   const { data } = useFetch<{ msg: string; }>(flag + '', () => request('/'), {});
 
   return (
-    <main className='text-pink-500'>NMSL
+    <>
       <Button onClick={() => setFlag(!flag)}>{flag ? '☆' : '★'}</Button>
       <p>{data?.msg}</p>
-    </main>
+    </>
   );
 }
