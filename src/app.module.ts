@@ -6,6 +6,7 @@ import { TestModule } from './test/test.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { LessonModule } from './lesson/lesson.module';
 
 @Module({
   imports: [
@@ -31,7 +32,7 @@ import { JwtModule } from '@nestjs/jwt';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '7d' }
     }),
-    UserModule, TestModule
+    UserModule, TestModule, LessonModule
   ],
   controllers: [AppController],
   providers: [AppService],

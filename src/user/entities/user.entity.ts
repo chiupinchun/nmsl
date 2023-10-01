@@ -14,7 +14,7 @@ export class User {
   }
 
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({ unique: true })
   account: string;

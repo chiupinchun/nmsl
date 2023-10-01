@@ -14,7 +14,7 @@ async function bootstrap() {
     prefix: '/images'
   });
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'http://localhost:5173'],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTION'],
     credentials: true
   });

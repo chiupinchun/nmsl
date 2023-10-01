@@ -19,9 +19,6 @@ export class UserController {
 
   @Post()
   @ApiOperation({ summary: '會員註冊' })
-  // @ApiParam({ name: 'account', description: '帳號', required: true, type: String })
-  // @ApiParam({ name: 'password', description: '密碼' })
-  // @ApiParam({ name: 'name', description: '暱稱' })
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
