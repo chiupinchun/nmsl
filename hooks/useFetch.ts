@@ -6,7 +6,9 @@ export default <T = unknown>(
 ) => {
   const [data, setData] = useState<T | null>(null);
   const [pending, setPending] = useState(true);
-  const [flag, refresh] = useState(true);
+  const [flag, setFlag] = useState(true);
+
+  const refresh = () => setFlag(!flag);
 
   useEffect(() => {
     setPending(true);

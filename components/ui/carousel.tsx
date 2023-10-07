@@ -30,7 +30,7 @@ const Carousel: React.FC<CarouselProps> = ({ children, autoPlay }) => {
   }
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative pb-10 overflow-hidden">
       <ul className="flex transition-transform duration-300 ease-in" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
         {React.Children.map(children, (child, index) => (
           <li
