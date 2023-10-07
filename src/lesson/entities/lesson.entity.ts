@@ -20,14 +20,17 @@ export class Lesson {
   @Column()
   title: string;
 
-  @Column()
-  description: string;
+  @Column({ length: 10000 })
+  content: string;
 
   @Column({ comment: '影片連結' })
   src: string;
 
   @Column({ comment: '搜尋用tag' })
   tags: string;
+
+  @Column({ comment: '權重，最高的幾項會被增加曝光', default: 0 })
+  weight: number;
 
   @Column({ comment: '曝光度', default: 0 })
   views: number;

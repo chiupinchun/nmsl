@@ -12,8 +12,8 @@ export class CreateLessonDto {
   @Length(1, 20, { message: '標題應為1-20字' })
   title: string;
 
-  @Length(0, 500, { message: '簡介不得超過500字' })
-  description: string;
+  @Length(0, 10000, { message: '內文不得超過10000字' })
+  content: string;
 
   @IsNotEmpty({ message: '連結必填' })
   @Length(1, 500, { message: '連結應為1-500字' })

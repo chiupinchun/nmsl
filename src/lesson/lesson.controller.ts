@@ -1,11 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { LessonService } from './lesson.service';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 
 @Controller('lesson')
 export class LessonController {
-  constructor(private readonly lessonService: LessonService) {}
+  constructor(private readonly lessonService: LessonService) { }
 
   @Post()
   create(@Body() createLessonDto: CreateLessonDto) {
@@ -13,8 +13,8 @@ export class LessonController {
   }
 
   @Get()
-  findAll() {
-    return this.lessonService.findAll();
+  findAll(@Query() query: Record<string, string>) {
+    return this.lessonService.findAll(query);
   }
 
   @Get(':id')

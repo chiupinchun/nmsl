@@ -13,11 +13,19 @@ export class Response<T> implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler<T>
   ): Observable<ResponseFormat<T>> | Promise<Observable<ResponseFormat<T>>> {
-    return next.handle().pipe(map(data => ({
-      data,
-      status: 1,
-      msg: '成功',
-      success: true
-    })));
+    return next.handle().pipe(map(dataMightWithCount => {
+      const result = Array.isArray(dataMightWithCount) ? {
+        data: dataMightWithCount[0],
+        totalRecord: dataMightWithCount[1],
+        totalPage: dataMightWithCount[2]
+      } : {
+        data: dataMightWithCount
+      };
+      return Object.assign(result, {
+        status: 1,
+        msg: '成功',
+        success: true
+      });
+    }));
   }
 }
