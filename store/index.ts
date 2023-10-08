@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
+import userSlice from './user';
 // import globalSlice from './global';
 
 const store = configureStore({
   reducer: {
     // global: globalSlice.reducer
+    user: userSlice.reducer
   }
 });
 

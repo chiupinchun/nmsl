@@ -13,30 +13,13 @@ import Pagination from '@/components/ui/pagination';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import { ApiProgress } from '@/components/ui/progress';
+import LessonHead from '@/components/lesson/head';
 
 const LessonCard = ({ data }: { data: Lesson; }) => {
   if (!data) return <div></div>;
   return (
     <div className='mx-auto max-w-fit w-3/4 h-96 max-h-full overflow-y-hidden'>
-      <div className='flex justify-between items-center'>
-        <h2 className='font-bold text-xl'>【{data.series}】 {data.title} - {data.author}</h2>
-        <div className='flex space-x-3'>
-          <div>點讚：{data.goods}</div>
-          <div>曝光：{data.views}</div>
-        </div>
-      </div>
-      <div className='flex justify-between items-center my-3'>
-        <div className='space-x-2'>
-          {data.tags?.split(',')?.map((tag, i) => (
-            <Link href={`/lesson/list?tag=${tag}`} key={tag + i}>
-              <Badge>{tag}</Badge>
-            </Link>
-          ))}
-        </div>
-        <div>
-          <div>{new Date(data.createTime).toLocaleString()}</div>
-        </div>
-      </div>
+      <LessonHead data={data}></LessonHead>
       <div className='flex justify-center relative '>
         <div className='me-5'>
           <iframe width="560" height="315" src={`https://www.youtube.com/embed/${data.src}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen loading='lazy'></iframe>

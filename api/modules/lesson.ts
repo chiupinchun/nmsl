@@ -1,8 +1,9 @@
 import { request } from "../core";
 
 
-type GetLessonsPayload = {
+export type GetLessonsPayload = {
   tag?: string;
+  series?: string;
   search?: string;
   page?: string;
   show?: string;
@@ -33,3 +34,7 @@ export const getLessons = (
 };
 
 export const getPickupLesson = () => getLessons({ show: '5', order: '-weight' });
+
+export const getLessonById = (id: string) => {
+  return request<Lesson>('/lesson/' + id);
+};

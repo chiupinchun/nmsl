@@ -25,3 +25,12 @@ export const signup = (payload: SignupPayload) => {
     body: payload
   });
 };
+
+interface UserInfo {
+  id: string;
+  account: string;
+  name: string;
+}
+export const getUserInfo = () => {
+  return request<UserInfo>('/user');
+};
