@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { LessonModule } from './lesson/lesson.module';
+import { NoticeGateway } from './notice/notice.gateway';
 
 @Module({
   imports: [
@@ -35,6 +36,6 @@ import { LessonModule } from './lesson/lesson.module';
     UserModule, TestModule, LessonModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, NoticeGateway],
 })
 export class AppModule { }

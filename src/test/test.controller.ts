@@ -5,12 +5,14 @@ import { UpdateTestDto } from './dto/update-test.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { File } from 'buffer';
 import { RoleGuard } from './guard/role.guard';
+import { NoticeGateway } from 'src/notice/notice.gateway';
 
-@UseGuards(RoleGuard)
+// @UseGuards(RoleGuard)
 @Controller('test')
 export class TestController {
   constructor(
-    private readonly testService: TestService
+    private readonly testService: TestService,
+    private readonly noticeGateway: NoticeGateway
   ) { }
 
   @Post('img')
@@ -29,6 +31,12 @@ export class TestController {
   @Get('role')
   getRole() {
 
+  }
+
+  @Get('ws-announce')
+  announce(@Query('msg') msg: string) {
+    this.noticeGateway.announce(msg);
+    return { msg };
   }
 
   @Post()

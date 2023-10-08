@@ -5,19 +5,22 @@ import { LoggerMiddleware } from 'src/logger/logger.middleware';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname, join } from 'path';
+import { NoticeGateway } from 'src/notice/notice.gateway';
 
 @Module({
-  imports: [MulterModule.register({
-    storage: diskStorage({
-      destination: join(__dirname, '../images'),
-      filename(req, file, cb) {
-        const fileName = `${new Date().getTime() + extname(file.originalname)}`;
-        return cb(null, fileName);
-      }
+  imports: [
+    MulterModule.register({
+      storage: diskStorage({
+        destination: join(__dirname, '../images'),
+        filename(req, file, cb) {
+          const fileName = `${new Date().getTime() + extname(file.originalname)}`;
+          return cb(null, fileName);
+        }
+      })
     })
-  })],
+  ],
   controllers: [TestController],
-  providers: [TestService],
+  providers: [TestService, NoticeGateway],
 })
 export class TestModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
