@@ -21,21 +21,27 @@ export class CommentController {
     @Body() body: { lessonId: number, content: string; }
   ) {
     const { lessonId, ...others } = body;
-    const user = await this.userService.findOne({ id: userId });
-    const lesson = await this.lessonService.findOne(body.lessonId);
-    return this.commentService.create({ ...body, user, lesson });
+    const [user, lesson] = await Promise.all([
+      this.userService.findOne({ id: userId }),
+      this.lessonService.findOne(body.lessonId)
+    ]);
+    return this.commentService.create({ ...others, user, lesson });
   }
 
-  @Get()
-  findAll(@Query('lesson') lessonId: string) {
-    const id = Number(lessonId);
-    if (!id || isNaN(id)) return Promise.resolve([]);
-    return this.commentService.findAll(id);
+  @Get(':lessonId')
+  async findAll(
+    @Param('lessonId') lessonId: string,
+    @Query() query: Record<string, string> = {}
+  ) {
+    return this.commentService.findAll({
+      ...query,
+      lesson: { id: Number(lessonId) }
+    });
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.commentService.findOne(+id);
+  @Get(':lessonId/:commentId')
+  findOne(@Param('commentId') commentId: string) {
+    return this.commentService.findOne(+commentId);
   }
 
   @Patch(':id')

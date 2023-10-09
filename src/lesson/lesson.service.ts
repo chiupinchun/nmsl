@@ -4,6 +4,7 @@ import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { Lesson } from './entities/lesson.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Like, Repository } from 'typeorm';
+import findAll from 'src/global/find-all';
 
 @Injectable()
 export class LessonService {
@@ -18,7 +19,7 @@ export class LessonService {
 
   async findAll(condition: Record<string, string> = {}) {
     const {
-      order: _order,
+      order,
       page = 1,
       show = 6,
       search,
@@ -38,20 +39,22 @@ export class LessonService {
       }, []);
     }
 
-    const take = +show;
-    const skip = (+page - 1) * take;
+    return findAll(this.lesson, where, { order, page, show });
 
-    const order = _order ? { [_order.replace(/^-/, '')]: _order[0] === '-' ? 'DESC' : 'ASC' } : undefined;
+    // const take = +show;
+    // const skip = (+page - 1) * take;
 
-    try {
-      const [dataList, totalRecord] = await this.lesson.findAndCount({ where, order, skip, take });
-      return {
-        dataList, totalRecord,
-        totalPage: Math.ceil(totalRecord / take)
-      };
-    } catch {
-      throw new BadRequestException();
-    }
+    // const order = _order ? { [_order.replace(/^-/, '')]: _order[0] === '-' ? 'DESC' : 'ASC' } : undefined;
+
+    // try {
+    //   const [dataList, totalRecord] = await this.lesson.findAndCount({ where, order, skip, take });
+    //   return {
+    //     dataList, totalRecord,
+    //     totalPage: Math.ceil(totalRecord / take)
+    //   };
+    // } catch {
+    //   throw new BadRequestException();
+    // }
   }
 
   findOne(id: number) {

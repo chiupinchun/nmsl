@@ -4,6 +4,7 @@ import { UpdateCommentDto } from './dto/update-comment.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Comment } from './entities/comment.entity';
 import { Repository } from 'typeorm';
+import findAll from 'src/global/find-all';
 
 @Injectable()
 export class CommentService {
@@ -16,18 +17,18 @@ export class CommentService {
     return this.comment.save(data);
   }
 
-  async findAll(id: number) {
-    const [dataList, totalRecord] = await this.comment.findAndCount({
-      where: {
-        lesson: { id }
+  async findAll(condition: Record<string, any>) {
+    return findAll(this.comment, condition, {
+      select: {
+        user: {
+          id: true,
+          name: true
+        }
       },
       relations: {
-        user: true,
-        lesson: true
+        user: true
       }
     });
-
-    return { dataList, totalRecord, totalPage: 1 };
   }
 
   findOne(id: number) {
