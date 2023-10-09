@@ -1,5 +1,6 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { CreateLessonDto } from "../dto/create-lesson.dto";
+import { Comment } from "../comment/entities/comment.entity";
 
 @Entity()
 export class Lesson {
@@ -40,4 +41,7 @@ export class Lesson {
 
   @Column({ type: 'timestamp' })
   createTime: Date;
+
+  @OneToMany(() => Comment, comment => comment.lesson)
+  comments: Comment[];
 }

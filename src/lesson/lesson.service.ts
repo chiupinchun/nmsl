@@ -44,8 +44,11 @@ export class LessonService {
     const order = _order ? { [_order.replace(/^-/, '')]: _order[0] === '-' ? 'DESC' : 'ASC' } : undefined;
 
     try {
-      const res = await this.lesson.findAndCount({ where, order, skip, take });
-      return res.concat(Math.ceil(res[1] / take));
+      const [dataList, totalRecord] = await this.lesson.findAndCount({ where, order, skip, take });
+      return {
+        dataList, totalRecord,
+        totalPage: Math.ceil(totalRecord / take)
+      };
     } catch {
       throw new BadRequestException();
     }

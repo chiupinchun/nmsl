@@ -12,7 +12,6 @@ export class AppController {
 
   @Post('test')
   post(@Body() body: Record<string, string>) {
-    console.log(body);
     return { code: 200 };
   }
 }

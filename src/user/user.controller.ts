@@ -8,6 +8,7 @@ import { Response, Request } from 'express';
 import { Auth } from 'src/auth/auth.decorator';
 import { AuthGuard } from 'src/auth/auth.guard';
 import * as bcrypt from 'bcrypt';
+import { User } from './entities/user.entity';
 
 @ApiTags('會員中心')
 @Controller('user')

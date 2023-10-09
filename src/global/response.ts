@@ -11,21 +11,39 @@ interface ResponseFormat<T> {
 export class Response<T> implements NestInterceptor {
   intercept(
     context: ExecutionContext,
-    next: CallHandler<T>
+    next: CallHandler<T & {
+      dataList?: T;
+      totalRecord?: number;
+      totalPage?: number;
+    }>
   ): Observable<ResponseFormat<T>> | Promise<Observable<ResponseFormat<T>>> {
     return next.handle().pipe(map(dataMightWithCount => {
-      const result = Array.isArray(dataMightWithCount) ? {
-        data: dataMightWithCount[0],
-        totalRecord: dataMightWithCount[1],
-        totalPage: dataMightWithCount[2]
-      } : {
-        data: dataMightWithCount
-      };
-      return Object.assign(result, {
+      // const result = Array.isArray(dataMightWithCount) && dataMightWithCount.length ? {
+      //   data: dataMightWithCount[0],
+      //   totalRecord: dataMightWithCount[1],
+      //   totalPage: dataMightWithCount[2]
+      // } : {
+      //   data: dataMightWithCount
+      // };
+      // return Object.assign(result, {
+      //   status: 1,
+      //   msg: '成功',
+      //   success: true
+      // });
+      const format = {
         status: 1,
         msg: '成功',
         success: true
-      });
+      };
+      if (dataMightWithCount.dataList) {
+        return {
+          ...format,
+          data: dataMightWithCount.dataList,
+          totalRecord: dataMightWithCount.totalRecord,
+          totalPage: dataMightWithCount.totalPage
+        };
+      }
+      return { ...format, data: dataMightWithCount };
     }));
   }
 }

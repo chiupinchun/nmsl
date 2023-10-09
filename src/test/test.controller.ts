@@ -18,7 +18,6 @@ export class TestController {
   @Post('img')
   @UseInterceptors(FileInterceptor('img'))
   upload(@UploadedFile() img: File) {
-    console.log(img);
     return img.toString();
   }
 
