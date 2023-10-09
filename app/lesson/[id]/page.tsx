@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import type { FC } from 'react';
 import LessonHead from '@/components/lesson/head';
 import LessonList from '@/components/lesson/list';
+import Comments from '@/components/lesson/comments';
 
 interface Props {
   params: { id: string; };
@@ -21,6 +22,8 @@ const page: FC<Props> = async ({ params }) => {
         <LessonList series={lesson.series} currentId={lesson.id}></LessonList>
       </div>
       <div dangerouslySetInnerHTML={{ __html: marked(lesson.content) }}></div>
+
+      <Comments lessonId={lesson.id} />
     </>
   );
 };

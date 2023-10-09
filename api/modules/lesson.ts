@@ -38,3 +38,23 @@ export const getPickupLesson = () => getLessons({ show: '5', order: '-weight' })
 export const getLessonById = (id: string) => {
   return request<Lesson>('/lesson/' + id);
 };
+
+interface Comment {
+  id: number;
+  content: string;
+  user: {
+    id: string;
+    name: string;
+  };
+  createTime: string;
+}
+export const getComments = (
+  payload: {
+    page?: string;
+    show?: string;
+    lessonId: number;
+  }
+) => {
+  const { lessonId, ...others } = payload;
+  return request<Comment[]>('/lesson-comment/' + lessonId, { query: others });
+};

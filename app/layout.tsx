@@ -3,6 +3,7 @@ import Header from '@/components/header';
 import type { Metadata } from 'next';
 import InitComponent from '@/app/init';
 import Provider from '@/store/provider';
+import { Toaster } from '@/components/ui/toaster';
 // import { Inter } from 'next/font/google';
 
 // const inter = Inter({ subsets: ['latin'] });
@@ -24,6 +25,7 @@ function RootLayout({
           <Header></Header>
           <main className='container pt-3'>{children}</main>
           <InitComponent />
+          <Toaster></Toaster>
         </Provider>
       </body>
     </html>

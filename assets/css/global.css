@@ -75,6 +75,10 @@
   }
 }
 
+p {
+  white-space: pre-line;
+}
+
 .sr-only {
   clip: rect(0,0,0,0);
   border-width: 0;
