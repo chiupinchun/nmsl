@@ -252,7 +252,7 @@ export {
 
 interface ColConfig<DefaultValue = unknown> {
   text: string;
-  type: 'string';
+  type: 'string' | 'password';
   range: number[];
   default: DefaultValue;
 }
@@ -278,6 +278,7 @@ export default function <T extends FieldValues = Record<string, unknown>>(
     let colSchema: z.ZodString | undefined;
     switch (col.type) {
       case 'string':
+      case 'password':
         colSchema = z.string();
         const min = col.range[0];
         const max = col.range[1];
@@ -333,7 +334,7 @@ export default function <T extends FieldValues = Record<string, unknown>>(
               <FormItem>
                 <FormLabel>{data[key].text}</FormLabel>
                 <FormControl>
-                  <Input placeholder={getPlaceholder(data[key])} {...field} />
+                  <Input placeholder={getPlaceholder(data[key])} {...field} type={data[key].type} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -341,9 +342,9 @@ export default function <T extends FieldValues = Record<string, unknown>>(
           />
         ))}
         {children}
-        <div className="flex justify-between">
-          <Button onClick={form.handleSubmit(submit.onSubmit)}>{submit.text ?? '送出'}</Button>
+        <div className="md:flex flex-row-reverse justify-between">
           {submit.slot}
+          <Button onClick={form.handleSubmit(submit.onSubmit)} className="w-full md:w-auto">{submit.text ?? '送出'}</Button>
         </div>
       </form>
     </Form>

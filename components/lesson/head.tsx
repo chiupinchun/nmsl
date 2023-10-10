@@ -34,7 +34,11 @@ const page: FC<Props> = ({ data }) => {
   return (
     <>
       <div className='flex justify-between items-center overflow-hidden'>
-        <h2 className='font-bold text-xl'>【{data.series}】 {data.title} - {data.author}</h2>
+        <h2 className='font-bold text-xl'>
+          <span className='hidden md:inline'>【{data.series}】 </span>
+          {data.title}
+          <span className='hidden md:inline'> - {data.author}</span>
+        </h2>
         <Star onClick={collect} color='hotpink' fill={collected ? 'hotpink' : undefined} className='cursor-pointer hover:scale-x-110' />
       </div>
       <div className='flex justify-between items-center my-3'>
@@ -45,8 +49,8 @@ const page: FC<Props> = ({ data }) => {
             </Link>
           ))}
         </div>
-        <div>
-          <div>{new Date(data.createTime).toLocaleString()}</div>
+        <div className='hidden md:block'>
+          {new Date(data.createTime).toLocaleString()}
         </div>
       </div>
     </>

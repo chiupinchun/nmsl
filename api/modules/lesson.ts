@@ -23,10 +23,8 @@ export interface Lesson {
   createTime: string;
 }
 export const getLessons = (
-  rawPayload: GetLessonsPayload = {}
+  payload: GetLessonsPayload = {}
 ) => {
-  const { tag, ...payload } = rawPayload;
-  if (tag) payload.search = (payload.search ? `${payload.search} ` : '') + tag;
 
   return request<Lesson[]>('/lesson', {
     query: payload

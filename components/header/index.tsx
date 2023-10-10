@@ -7,7 +7,7 @@ interface Props { }
 const page: FC<Props> = ({ }) => {
   return (
     <>
-      <header className='fixed z-20 top-0 w-full border-b-2 border-slate-500 shadow-sm shadow-slate-500'>
+      <header className='fixed z-20 top-0 w-full border-b-2 border-slate-500 shadow-sm shadow-slate-500 bg-black bg-opacity-75'>
         <ul className='flex items-center container'>
           <li className='me-auto'>
             <h2><Link href='/'>NMSL檸檬森林</Link></h2>

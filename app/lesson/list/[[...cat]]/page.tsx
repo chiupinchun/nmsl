@@ -20,12 +20,12 @@ const LessonCard = ({ data }: { data: Lesson; }) => {
   return (
     <div className='mx-auto max-w-fit w-3/4 h-96 max-h-full overflow-y-hidden'>
       <LessonHead data={data}></LessonHead>
-      <div className='flex justify-center relative '>
+      <div className='flex flex-col-reverse md:flex-row justify-center relative '>
         <div className='me-5'>
           <iframe width="560" height="315" src={`https://www.youtube.com/embed/${data.src}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen loading='lazy'></iframe>
         </div>
-        <div className='py-3' dangerouslySetInnerHTML={{ __html: marked(data.content) }}></div>
-        <Link href={`/lesson/${data.id}`} target='_blank' className='absolute bottom-5 right-5 text-slate-300 font-bold text-lg transition-all hover:text-xl'>前往課程&gt;&gt;</Link>
+        <div className='hidden md:block py-3' dangerouslySetInnerHTML={{ __html: marked(data.content) }}></div>
+        <Link href={`/lesson/${data.id}`} target='_blank' className='md:absolute bottom-5 right-5 text-slate-300 font-bold text-lg transition-all hover:text-xl'>前往課程&gt;&gt;</Link>
       </div>
     </div>
   );
@@ -34,18 +34,24 @@ const LessonCard = ({ data }: { data: Lesson; }) => {
 interface Props { }
 const page: FC<Props> = ({ }) => {
   const router = useRouter();
-  const queryTag = useMemo(() => router.query.tag ?? '', [router.query.tag]);
+  const querySeries = useMemo(() => router.query.series ?? '', [router.query.series]);
+
+  const changeTab = (series: string) => {
+    const { series: _series, ...query } = router.query;
+
+    router.push({ query: series ? { ...query, series } : query });
+  };
 
   const { data: pickupLessons } = useFetch(getPickupLesson);
 
   const { data: lessons, pending: lessonsPending } = useFetch(
-    () => getLessons({ ...router.query, tag: queryTag }),
+    () => getLessons(router.query),
     [router.query]
   );
 
   const [keyword, setKeyword] = useState(decodeURIComponent(router.query.search ?? ''));
   const search = () => {
-    router.push({ query: { search: keyword } });
+    router.push({ query: { ...router.query, search: keyword, page: '1' } });
   };
 
   return (
@@ -57,8 +63,8 @@ const page: FC<Props> = ({ }) => {
         )) ?? [])]}
       </Carousel>
 
-      <Tabs className="mt-10 mx-auto w-3/4" value={queryTag} onValueChange={(tag) => router.push({ query: { tag } })}>
-        <TabsList className="grid w-full grid-cols-6 rounded-b-none">
+      <Tabs className="mt-10 mx-auto md:w-3/4" value={querySeries} onValueChange={changeTab}>
+        <TabsList className="md:grid w-full grid-cols-6 rounded-b-none">
           <TabsTrigger value=''>全部</TabsTrigger>
           <TabsTrigger value='js'>JavaScript</TabsTrigger>
           <TabsTrigger value='vue'>Vue</TabsTrigger>
@@ -79,23 +85,26 @@ const page: FC<Props> = ({ }) => {
               <div className='flex flex-col justify-around w-full me-3'>
                 <div className='flex justify-between items-center'>
                   <h2 className='text-xl font-bold'>
-                    <Link href={`/lesson/${lesson.id}`} target='_blank'>【{lesson.series}】 {lesson.title}</Link>
-                  </h2>
-                  <div>{(new Date(lesson.createTime)).toLocaleDateString()}</div>
-                </div>
-                <div className='space-x-2'>
-                  {lesson.tags?.split(',')?.map((tag, i) => (
-                    <Link href={`/lesson/list?tag=${tag}`} key={tag + i}>
-                      <Badge>{tag}</Badge>
+                    <Link href={`/lesson/${lesson.id}`} target='_blank'>
+                      <span className='hidden md:inline'>【{lesson.series}】</span>
+                      {lesson.title}
                     </Link>
-                  ))}
+                  </h2>
+                  <div className='hidden md:block'>{(new Date(lesson.createTime)).toLocaleDateString()}</div>
                 </div>
-                <div className='flex justify-between'>
+                <div className='md:flex justify-between'>
                   <div className='space-x-2'>
+                    {lesson.tags?.split(',')?.map((tag, i) => (
+                      <Link href={`/lesson/list?tag=${tag}`} key={tag + i}>
+                        <Badge>{tag}</Badge>
+                      </Link>
+                    ))}
+                  </div>
+                  {/* <div className='space-x-2'>
                     <span>點讚：{lesson.goods}</span>
                     <span>曝光：{lesson.views}</span>
-                  </div>
-                  <Link href={`/lesson/${lesson.id}`} target='_blank' className='text-slate-300 font-bold hover:underline'>前往課程&gt;&gt;</Link>
+                  </div> */}
+                  <Link href={`/lesson/${lesson.id}`} target='_blank' className='block mt-2 md:mt-0 text-slate-300 font-bold hover:underline'>前往課程&gt;&gt;</Link>
                 </div>
               </div>
             </li>

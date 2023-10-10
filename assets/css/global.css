@@ -33,6 +33,8 @@
     --ring: 222.2 84% 4.9%;
  
     --radius: 0.5rem;
+
+    --header-height: 52px
   }
  
   .dark {
@@ -89,4 +91,11 @@ p {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }

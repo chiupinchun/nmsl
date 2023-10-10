@@ -18,14 +18,14 @@ const page: FC<Props> = ({ }) => {
 
         const socket = io(process.env.NEXT_PUBLIC_API_BASE_URL!.replace(/^http(s)?:\/\//, '') + '/notice', { auth: { token } });
 
-        socket.on('notice', msg => {
-          console.log(msg);
+        socket.on('notice', message => {
+          console.log(message);
         });
-        socket.on('announce', msg => {
-          console.log(msg);
+        socket.on('announce', message => {
+          console.log(message);
         });
-        socket.on('error', msg => {
-          console.log(msg);
+        socket.on('error', message => {
+          console.log(message);
         });
       }
     });

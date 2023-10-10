@@ -40,7 +40,7 @@ const page: FC<Props> = ({ }) => {
     <>
       <Form data={formData} title='帳號註冊' submit={{
         text: '註冊', onSubmit,
-        slot: <p className='mt-3'>已有帳號？<Link href='/login'>點我登入</Link>。</p>
+        slot: <p className='flex justify-center items-center my-3 md:my-0'>已有帳號？<Link href='/login' className='hover:underline'>點我登入</Link>。</p>
       }}></Form>
     </>
   );

@@ -18,7 +18,7 @@ const page: FC<Props> = ({ }) => {
     },
     password: {
       text: '密碼',
-      type: 'string',
+      type: 'password',
       range: [8, 20],
       default: ''
     }
@@ -36,7 +36,7 @@ const page: FC<Props> = ({ }) => {
     <>
       <Form data={formData} title='帳號登入' submit={{
         text: '登入', onSubmit,
-        slot: <p className='mt-3'>沒有帳號？<Link href='/signup'>點我註冊</Link>。</p>
+        slot: <p className='flex justify-center items-center my-3 md:my-0'>沒有帳號？<Link href='/signup' className='hover:underline'>點我註冊</Link>。</p>
       }}></Form>
     </>
   );

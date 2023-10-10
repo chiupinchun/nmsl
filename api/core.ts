@@ -10,7 +10,7 @@ export const request = async <T = unknown>(
   data: T;
   totalRecord?: number;
   totalPage?: number;
-  msg: string;
+  message: string;
   status: number;
   success: boolean;
 }> => {

@@ -26,9 +26,11 @@ export const useRouter = () => {
     return _push(to + '?' + parsedQuery, otherOptions);
   }, [router, path, _query]);
 
-  const query = useMemo(() => _query.toString().split('&').reduce((res, item) => {
-    const arr = item.split('=');
-    res[arr[0]] = arr.slice(1).join('=');
+  const query: Record<string, string> = useMemo(() => _query.toString().split('&').reduce((res, item) => {
+    if (item) {
+      const arr = item.split('=');
+      res[arr[0]] = arr.slice(1).join('=');
+    }
     return res;
   }, {} as Record<string, string>), [_query]);
 

@@ -35,7 +35,7 @@ const page: FC<Props> = ({ lessonId }) => {
       refreshComments();
       window.scrollTo(0, document.body.scrollHeight);
       return true;
-    } else toast({ variant: 'destructive', description: res?.msg ?? '發生錯誤！' });
+    } else toast({ variant: 'destructive', description: res?.message ?? '發生錯誤！' });
   };
 
   return (
@@ -43,9 +43,9 @@ const page: FC<Props> = ({ lessonId }) => {
       <Comment onSubmit={comment} className='my-10'>
         <ul>
           {comments ? comments.data.map(comment => (
-            <li className='flex p-5' key={comment.id}>
-              <div className='w-1/6'>{comment.user.name}：</div>
-              <p className='w-5/6'>{comment.content}</p>
+            <li className='md:flex p-5' key={comment.id}>
+              <div className='md:w-1/6'>{comment.user.name}：</div>
+              <p className='md:w-5/6'>{comment.content}</p>
             </li>
           )) : (
             <li className='text-center'>

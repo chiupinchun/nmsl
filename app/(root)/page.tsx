@@ -6,12 +6,12 @@ import { useState } from 'react';
 
 export default function Home() {
   const [flag, setFlag] = useState(false);
-  const { data } = useFetch<{ msg: string; }>(flag + '', () => request('/'), {});
+  const { data } = useFetch<{ message: string; }>(flag + '', () => request('/'), {});
 
   return (
     <>
       <Button onClick={() => setFlag(!flag)}>{flag ? '☆' : '★'}</Button>
-      <p>{data?.msg}</p>
+      <p>{data?.message}</p>
     </>
   );
 }
