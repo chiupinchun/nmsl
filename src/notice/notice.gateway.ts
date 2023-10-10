@@ -19,7 +19,7 @@ export class NoticeGateway implements OnGatewayInit, OnGatewayConnection, OnGate
   async handleConnection(client: Socket, ...args: any[]) {
     const token = client.handshake.auth.token;
     if (!token) {
-      client.emit('error', { msg: '系統異常。', status: -1 });
+      client.emit('error', { message: '系統異常。', status: -1 });
       return;
     }
 
@@ -30,9 +30,9 @@ export class NoticeGateway implements OnGatewayInit, OnGatewayConnection, OnGate
       );
       if (id) {
         client.join(id);
-      } else client.emit('error', { msg: '無效token', status: 0 });
+      } else client.emit('error', { message: '無效token', status: 0 });
     } catch {
-      client.emit('error', { msg: '無效token', status: 0 });
+      client.emit('error', { message: '無效token', status: 0 });
     }
     return;
     // this.logger.log(`client connected: ${client.id}`);

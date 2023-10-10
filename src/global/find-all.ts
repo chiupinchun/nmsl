@@ -23,8 +23,9 @@ export default async <T = unknown>(
   const order = (_order ? { [_order.replace(/^-/, '')]: _order[0] === '-' ? 'DESC' : 'ASC' } : undefined) as FindOptionsOrder<T>;
 
   try {
-    console.log({ ...others, where, order, skip, take });
-    const [dataList, totalRecord] = await repository.findAndCount({ ...others, where, order, skip, take });
+    const condition = { ...others, where, order, skip, take };
+    console.log(condition);
+    const [dataList, totalRecord] = await repository.findAndCount(condition);
     return {
       dataList, totalRecord,
       totalPage: Math.ceil(totalRecord / take)

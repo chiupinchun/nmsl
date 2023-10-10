@@ -5,7 +5,7 @@ interface ResponseFormat<T> {
   data: T;
   status: number;
   success: boolean;
-  msg: string;
+  message: string;
 }
 @Injectable()
 export class Response<T> implements NestInterceptor {
@@ -27,12 +27,12 @@ export class Response<T> implements NestInterceptor {
       // };
       // return Object.assign(result, {
       //   status: 1,
-      //   msg: '成功',
+      //   message: '成功',
       //   success: true
       // });
       const format = {
         status: 1,
-        msg: '成功',
+        message: '成功',
         success: true
       };
       if (dataMightWithCount.dataList) {

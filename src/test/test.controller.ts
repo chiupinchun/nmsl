@@ -33,9 +33,9 @@ export class TestController {
   }
 
   @Get('ws-announce')
-  announce(@Query('msg') msg: string) {
-    this.noticeGateway.announce(msg);
-    return { msg };
+  announce(@Query('message') message: string) {
+    this.noticeGateway.announce(message);
+    return { message };
   }
 
   @Post()
