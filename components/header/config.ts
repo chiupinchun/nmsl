@@ -9,6 +9,10 @@ export default {
     {
       title: '前端課程',
       href: '/lesson/list'
+    },
+    {
+      title: '許願池',
+      href: '/fountain'
     }
   ] as NavItem[]
 };

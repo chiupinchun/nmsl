@@ -1,10 +1,14 @@
+"use client";
 import Link from 'next/link';
 import type { FC } from 'react';
 import config from './config';
+import useCookie from '@/hooks/useCookie';
 
 interface Props { }
 
 const page: FC<Props> = ({ }) => {
+  const [token, setToken] = useCookie('token');
+
   return (
     <>
       <header className='fixed z-20 top-0 w-full border-b-2 border-slate-500 shadow-sm shadow-slate-500 bg-black bg-opacity-75'>
@@ -18,7 +22,11 @@ const page: FC<Props> = ({ }) => {
             </li>
           ))}
           <li>
-            <Link href='/login' className='block px-3 py-2'>登入</Link>
+            {
+              token ?
+                <a onClick={(e) => { e.preventDefault(); setToken(null); }} className='block px-3 py-2' href="">登出</a> :
+                <Link href='/login' className='block px-3 py-2'>登入</Link>
+            }
           </li>
         </ul>
       </header>

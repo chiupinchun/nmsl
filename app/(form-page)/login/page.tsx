@@ -1,14 +1,32 @@
 "use client";
-import { request } from '@/api/core';
 import { login, type LoginPayload } from '@/api/modules/user';
 import Form, { FormConfig } from '@/components/ui/form';
+import { useToast } from '@/components/ui/use-toast';
+import { useRouter } from '@/hooks/useRouter';
+import { useSelector } from '@/store';
+import { setUserInfo } from '@/store/user';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useEffect, type FC } from 'react';
+import { useDispatch } from 'react-redux';
 
 interface Props { }
 
 const page: FC<Props> = ({ }) => {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const checkLoginAndRedirect = () => {
+    if (!user.account) return;
+    const { redirect } = router.query;
+    if (redirect) {
+      if (redirect.includes('http')) location.href = redirect;
+      else router.push(redirect);
+    } else router.push('/');
+  };
+  useEffect(checkLoginAndRedirect, [user.account]);
+
   const formData: FormConfig<LoginPayload> = {
     account: {
       text: '帳號',
@@ -26,6 +44,9 @@ const page: FC<Props> = ({ }) => {
   const onSubmit = async (payload: LoginPayload) => {
     const res = await login(payload);
     console.log(res);
+    if (res?.success && res.data) {
+      dispatch(setUserInfo(res.data));
+    } else toast({ variant: 'destructive', description: res?.message ?? '發生錯誤！' });
   };
 
   // useEffect(() => {

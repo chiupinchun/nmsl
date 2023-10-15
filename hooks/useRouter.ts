@@ -29,7 +29,7 @@ export const useRouter = () => {
   const query: Record<string, string> = useMemo(() => _query.toString().split('&').reduce((res, item) => {
     if (item) {
       const arr = item.split('=');
-      res[arr[0]] = arr.slice(1).join('=');
+      res[arr[0]] = decodeURIComponent(arr.slice(1).join('='));
     }
     return res;
   }, {} as Record<string, string>), [_query]);

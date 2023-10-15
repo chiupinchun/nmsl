@@ -6,6 +6,9 @@ import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useToast } from "@/components/ui/use-toast";
+import { useSelector } from '@/store';
+import Link from 'next/link';
+import { useRouter } from '@/hooks/useRouter';
 
 interface Props {
   children?: React.ReactNode;
@@ -17,6 +20,9 @@ const page: FC<Props> = ({
   onSubmit = () => { },
   className, children
 }) => {
+  const user = useSelector(state => state.user);
+  const router = useRouter();
+
   const [content, setContent] = useState('');
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState('');
@@ -37,6 +43,12 @@ const page: FC<Props> = ({
   const submit = async () => {
     if (await onSubmit({ content, tags })) setContent('');
   };
+
+  if (!user?.account) return (
+    <div className={cn('flex items-center justify-center h-48 border border-slate-500 rounded-sm', className)}>
+      <Link href={`/login?redirect=${router.path}`}>登入</Link>後留言
+    </div>
+  );
 
   return (
     <>
