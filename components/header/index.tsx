@@ -1,13 +1,24 @@
 "use client";
 import Link from 'next/link';
-import type { FC } from 'react';
+import type { FC, MouseEventHandler } from 'react';
 import config from './config';
 import useCookie from '@/hooks/useCookie';
+import { useSelector } from '@/store';
+import { useDispatch } from 'react-redux';
+import * as actions from '@/store/user';
 
 interface Props { }
 
 const page: FC<Props> = ({ }) => {
-  const [token, setToken] = useCookie('token');
+  const [_, setToken] = useCookie('token');
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
+
+  const logout: MouseEventHandler<HTMLAnchorElement> = (e) => {
+    e.preventDefault();
+    actions.logout(undefined);
+    setToken(null);
+  };
 
   return (
     <>
@@ -23,8 +34,8 @@ const page: FC<Props> = ({ }) => {
           ))}
           <li>
             {
-              token ?
-                <a onClick={(e) => { e.preventDefault(); setToken(null); }} className='block px-3 py-2' href="">登出</a> :
+              user.account ?
+                <a onClick={logout} className='block px-3 py-2' href="">登出</a> :
                 <Link href='/login' className='block px-3 py-2'>登入</Link>
             }
           </li>

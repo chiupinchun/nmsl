@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import { ApiProgress } from '@/components/ui/progress';
 import LessonHead from '@/components/lesson/head';
+import Breadcrumbs from '@/components/breadcrumbs';
 
 const LessonCard = ({ data }: { data: Lesson; }) => {
   if (!data) return <div></div>;
@@ -25,7 +26,7 @@ const LessonCard = ({ data }: { data: Lesson; }) => {
           <iframe width="560" height="315" src={`https://www.youtube.com/embed/${data.src}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen loading='lazy'></iframe>
         </div>
         <div className='hidden md:block py-3' dangerouslySetInnerHTML={{ __html: marked(data.content) }}></div>
-        <Link href={`/lesson/${data.id}`} target='_blank' className='md:absolute bottom-5 right-5 text-slate-300 font-bold text-lg transition-all hover:text-xl'>前往課程&gt;&gt;</Link>
+        <Link href={`/lesson/${data.id}`} target='_self' className='md:absolute bottom-5 right-5 text-slate-300 font-bold text-lg transition-all hover:text-xl'>前往課程&gt;&gt;</Link>
       </div>
     </div>
   );
@@ -57,6 +58,7 @@ const page: FC<Props> = ({ }) => {
   return (
     <>
       <h1 className='sr-only'>課程列表</h1>
+      <Breadcrumbs routes={[{ title: '課程列表' }]} />
       <Carousel>
         {[...(pickupLessons?.data?.map(item => (
           <LessonCard data={item} key={item.id}></LessonCard>
@@ -79,13 +81,13 @@ const page: FC<Props> = ({ }) => {
         <ul className=''>
           {lessons?.data?.map(lesson => (
             <li key={lesson.id} className='flex p-2 my-3 rounded-md shadow-xl shadow-slate-500'>
-              <Link href={`/lesson/${lesson.id}`} target='_blank' className='flex justify-center items-center me-3 overflow-hidden'>
+              <Link href={`/lesson/${lesson.id}`} target='_self' className='flex justify-center items-center me-3 overflow-hidden'>
                 <img width={280} height={210} src={`http://img.youtube.com/vi/${lesson.src}/0.jpg`} alt={lesson.title} className='transition hover:scale-110'></img>
               </Link>
               <div className='flex flex-col justify-around w-full me-3'>
                 <div className='flex justify-between items-center'>
                   <h2 className='text-xl font-bold'>
-                    <Link href={`/lesson/${lesson.id}`} target='_blank'>
+                    <Link href={`/lesson/${lesson.id}`} target='_self'>
                       <span className='hidden md:inline'>【{lesson.series}】</span>
                       {lesson.title}
                     </Link>
@@ -104,7 +106,7 @@ const page: FC<Props> = ({ }) => {
                     <span>點讚：{lesson.goods}</span>
                     <span>曝光：{lesson.views}</span>
                   </div> */}
-                  <Link href={`/lesson/${lesson.id}`} target='_blank' className='block mt-2 md:mt-0 text-slate-300 font-bold hover:underline'>前往課程&gt;&gt;</Link>
+                  <Link href={`/lesson/${lesson.id}`} target='_self' className='block mt-2 md:mt-0 text-slate-300 font-bold hover:underline'>前往課程&gt;&gt;</Link>
                 </div>
               </div>
             </li>

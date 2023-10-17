@@ -13,6 +13,24 @@ import { getWishes, postWish } from '@/api/modules/wish';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import loading from '@/assets/images/loading.svg';
 import Image from 'next/image';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  PointElement,
+  BarElement,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import Breadcrumbs from '@/components/breadcrumbs';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  BarElement,
+  Tooltip
+);
 
 interface Props { }
 
@@ -52,6 +70,7 @@ const page: FC<Props> = ({ }) => {
   return (
     <>
       <h1 className='sr-only'>許願池</h1>
+      <Breadcrumbs routes={[{ title: '課程許願池' }]} />
       <section className='py-2'>
         <h2 className='text-xl font-bold'>課程許願池</h2>
         <p>
@@ -81,25 +100,42 @@ const page: FC<Props> = ({ }) => {
         </p>
         {wishPending ?
           <Image src={loading} alt='讀取中' /> :
-          <Table className='my-5 md:mx-auto md:w-2/3'>
-            <TableCaption>許願池排行榜</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">名次</TableHead>
-                <TableHead>想學的技術</TableHead>
-                <TableHead className="text-right">票數</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {wishes?.data?.slice(0, 10)?.map((item, idx) => (
-                <TableRow key={item.wish}>
-                  <TableCell className="font-medium">{idx + 1}</TableCell>
-                  <TableCell>{item.wish}</TableCell>
-                  <TableCell className="text-right">{item.count}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          wishes?.data?.length ?
+            <div className='md:flex my-5'>
+              <Table className='md:me-2 md:w-1/3'>
+                <TableCaption>許願池排行榜</TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[100px]">名次</TableHead>
+                    <TableHead>想學的技術</TableHead>
+                    <TableHead className="text-right">票數</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {wishes.data.slice(0, 7).map((item, idx) => (
+                    <TableRow key={item.wish}>
+                      <TableCell className="font-medium">{idx + 1}</TableCell>
+                      <TableCell>{item.wish}</TableCell>
+                      <TableCell className="text-right">{item.count}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <div className='md:ms-2 md:w-2/3'>
+                <Bar
+                  data={{
+                    labels: wishes.data.slice(0, 7).map(item => item.wish),
+                    datasets: [
+                      {
+                        data: wishes.data.slice(0, 7).map(item => item.count),
+                        backgroundColor: "purple",
+                      },
+                    ],
+                  }}
+                />
+              </div>
+            </div> :
+            <div>目前沒有資料。</div>
         }
       </section>
 
