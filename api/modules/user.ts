@@ -26,7 +26,7 @@ export const signup = (payload: SignupPayload) => {
   });
 };
 
-interface UserInfo {
+export interface UserInfo {
   id: string;
   account: string;
   name: string;

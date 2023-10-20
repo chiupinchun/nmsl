@@ -43,15 +43,10 @@ const page: FC<Props> = ({ }) => {
   };
   const onSubmit = async (payload: LoginPayload) => {
     const res = await login(payload);
-    console.log(res);
     if (res?.success && res.data) {
       dispatch(setUserInfo(res.data));
     } else toast({ variant: 'destructive', description: res?.message ?? '發生錯誤！' });
   };
-
-  // useEffect(() => {
-  //   request('/user').then(res => console.log(res));
-  // }, []);
 
   return (
     <>

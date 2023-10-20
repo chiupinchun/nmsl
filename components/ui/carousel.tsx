@@ -1,3 +1,4 @@
+"use client";
 import React, { ReactNode, useEffect, useState } from 'react';
 import arrow from '@/assets/images/right-arrow.svg';
 

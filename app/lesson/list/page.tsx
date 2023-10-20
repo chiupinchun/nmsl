@@ -3,34 +3,18 @@ import { getPickupLesson, getLessons } from '@/api/modules/lesson';
 import Carousel from '@/components/ui/carousel';
 import useFetch from '@/hooks/useFetch';
 import { useMemo, type FC, useState } from 'react';
-import { marked } from 'marked';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
-import type { Lesson } from '@/api/modules/lesson';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useRouter } from '@/hooks/useRouter';
 import Pagination from '@/components/ui/pagination';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import { ApiProgress } from '@/components/ui/progress';
-import LessonHead from '@/components/lesson/head';
+import PickupCard from '@/components/lesson/pickupCard';
 import Breadcrumbs from '@/components/breadcrumbs';
 
-const LessonCard = ({ data }: { data: Lesson; }) => {
-  if (!data) return <div></div>;
-  return (
-    <div className='mx-auto max-w-fit w-3/4 h-96 max-h-full overflow-y-hidden'>
-      <LessonHead data={data}></LessonHead>
-      <div className='flex flex-col-reverse md:flex-row justify-center relative '>
-        <div className='me-5'>
-          <iframe width="560" height="315" src={`https://www.youtube.com/embed/${data.src}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen loading='lazy'></iframe>
-        </div>
-        <div className='hidden md:block py-3' dangerouslySetInnerHTML={{ __html: marked(data.content) }}></div>
-        <Link href={`/lesson/${data.id}`} target='_self' className='md:absolute bottom-5 right-5 text-slate-300 font-bold text-lg transition-all hover:text-xl'>前往課程&gt;&gt;</Link>
-      </div>
-    </div>
-  );
-};
+
 
 interface Props { }
 const page: FC<Props> = ({ }) => {
@@ -61,7 +45,7 @@ const page: FC<Props> = ({ }) => {
       <Breadcrumbs routes={[{ title: '課程列表' }]} />
       <Carousel>
         {[...(pickupLessons?.data?.map(item => (
-          <LessonCard data={item} key={item.id}></LessonCard>
+          <PickupCard data={item} key={item.id}></PickupCard>
         )) ?? [])]}
       </Carousel>
 

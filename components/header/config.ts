@@ -13,6 +13,10 @@ export default {
     {
       title: '許願池',
       href: '/fountain'
+    },
+    {
+      title: 'IT好文',
+      href: '/article/list'
     }
   ] as NavItem[]
 };

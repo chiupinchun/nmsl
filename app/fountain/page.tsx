@@ -1,10 +1,9 @@
 "use client";
-import { useState, type FC, useEffect } from 'react';
-import Screen3d from '@/components/fountain/canvas';
+import { useState, type FC } from 'react';
+// import Screen3d from '@/components/fountain/canvas';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AutoCompleteInput, Input } from '@/components/ui/input';
-import { request } from '@/api/core';
 import { useToast } from '@/components/ui/use-toast';
 import { useSelector } from '@/store';
 import Link from 'next/link';
@@ -23,6 +22,10 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import Breadcrumbs from '@/components/breadcrumbs';
+import dynamic from 'next/dynamic';
+
+// const Screen3d = lazy(() => import('@/components/fountain/canvas'));
+const Screen3d = dynamic(() => import('@/components/fountain/canvas'));
 
 ChartJS.register(
   CategoryScale,
@@ -52,7 +55,6 @@ const page: FC<Props> = ({ }) => {
 
   const sendWish = async () => {
     const res = await postWish(newWish);
-    console.log(res);
     if (res?.success) {
       toast({ description: '許願成功！' });
       setNewWish('');
@@ -80,7 +82,8 @@ const page: FC<Props> = ({ }) => {
         </p>
       </section>
       <section className='relative py-2 h-[500px] md:h-[700px] overflow-hidden rounded-sm'>
-        <Screen3d></Screen3d>
+        {/* <Suspense><Screen3d /></Suspense> */}
+        <Screen3d />
         <div className='absolute bottom-10 w-full text-center'>
           <Button className='px-10 py-5 rounded-[9999px]' variant='secondary'>
             {user.account ? (
@@ -143,10 +146,6 @@ const page: FC<Props> = ({ }) => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>想學甚麼技術呢？</DialogTitle>
-            {/* <DialogDescription>
-                  This action cannot be undone. This will permanently delete your account
-                  and remove your data from our servers.
-                </DialogDescription> */}
           </DialogHeader>
           <label className='relative'>許願
             <AutoCompleteInput value={newWish} onChange={setNewWish} autoInputOpts={wishes?.data ? wishes.data.map(item => item.wish) : undefined} className='mt-2'></AutoCompleteInput>

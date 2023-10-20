@@ -40,7 +40,7 @@ const page: FC<Props> = ({ lessonId }) => {
 
   return (
     <>
-      <Comment onSubmit={comment} className='my-10'>
+      <Comment onSubmit={comment} className='my-10' commentLabel='課堂討論留言板'>
         <ul>
           {comments ? comments.data.map(comment => (
             <li className='md:flex p-5' key={comment.id}>

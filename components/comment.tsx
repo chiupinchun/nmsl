@@ -13,12 +13,13 @@ import { useRouter } from '@/hooks/useRouter';
 interface Props {
   children?: React.ReactNode;
   className?: string;
+  commentLabel?: string;
   onSubmit?: (payload: { content: string, tags: string[]; }) => boolean | void | Promise<boolean | void>;
 }
 
 const page: FC<Props> = ({
   onSubmit = () => { },
-  className, children
+  className, children, commentLabel
 }) => {
   const user = useSelector(state => state.user);
   const router = useRouter();
@@ -53,7 +54,8 @@ const page: FC<Props> = ({
   return (
     <>
       <div className={cn('p-5 border border-slate-500 rounded-sm', className)}>
-        <label className='block'>留言
+        <label className='block'>
+          {commentLabel ?? '留言'}
           <Textarea placeholder='留個言吧。' className='mt-3' value={content} onChange={e => setContent(e.target.value)}></Textarea>
         </label>
         <div className='flex justify-between mt-5'>
