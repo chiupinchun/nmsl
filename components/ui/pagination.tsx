@@ -2,8 +2,7 @@ import { useState, type FC, useMemo, MouseEventHandler } from 'react';
 import Link from 'next/link';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
-import { useRouter } from '@/hooks/useRouter';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 const variant = {
   default: '',
@@ -30,8 +29,11 @@ const PageItem: FC<{
   variant?: keyof typeof variant | null | undefined;
   children: React.ReactNode;
 }> = ({ toPage, searchParam = 'page', action, variant, children }) => {
-  const router = useRouter();
-  const href = searchParam ? router.path + '?' + (new URLSearchParams({ ...router.query, [searchParam]: `${toPage}` })).toString() : '';
+  const pathname = usePathname();
+  const searchParams = useSearchParams()!;
+  const params = new URLSearchParams(searchParams);
+  searchParam && params.set(searchParam, `${toPage}`);
+  const href = searchParam ? pathname + '?' + params.toString() : '';
 
   const onLinkClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
     if (!searchParam) e.preventDefault();
@@ -55,9 +57,11 @@ const page: FC<Props> = (props) => {
     range = 3,
     className
   } = props;
-  const router = useRouter();
+
+  const searchParams = useSearchParams();
+
   const [currentPage, changePage] = useState<number>(
-    Number((searchParam && router.query[searchParam]) ?? 1)
+    Number((searchParam && searchParams.get(searchParam)) ?? 1)
   );
   const action = (page: number) => {
     changePage(page);

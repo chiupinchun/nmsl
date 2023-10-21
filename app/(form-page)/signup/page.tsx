@@ -2,16 +2,18 @@
 import { signup, type SignupPayload } from '@/api/modules/user';
 import Form, { FormConfig } from '@/components/ui/form';
 import { useToast } from '@/components/ui/use-toast';
-import { useRouter } from '@/hooks/useRouter';
 import { useSelector } from '@/store';
 import { setUserInfo } from '@/store/user';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, type FC } from 'react';
 import { useDispatch } from 'react-redux';
 
-interface Props { }
+interface Props {
+  searchParams: { [key: string]: string | undefined; };
+}
 
-const page: FC<Props> = ({ }) => {
+const page: FC<Props> = ({ searchParams }) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const router = useRouter();
@@ -19,7 +21,7 @@ const page: FC<Props> = ({ }) => {
 
   const checkLoginAndRedirect = () => {
     if (!user.account) return;
-    const { redirect } = router.query;
+    const { redirect } = searchParams;
     if (redirect) {
       if (redirect.includes('http')) location.href = redirect;
       else router.push(redirect);

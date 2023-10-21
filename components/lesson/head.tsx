@@ -44,7 +44,7 @@ const page: FC<Props> = ({ data }) => {
       <div className='flex justify-between items-center my-3'>
         <div className='space-x-2'>
           {data.tags?.split(',')?.map((tag, i) => (
-            <Link href={`/lesson/list?tag=${tag}`} key={tag + i}>
+            <Link href={`/lesson/list?search=${tag}`} key={tag + i}>
               <Badge>{tag}</Badge>
             </Link>
           ))}

@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from "@/components/ui/use-toast";
 import { useSelector } from '@/store';
 import Link from 'next/link';
-import { useRouter } from '@/hooks/useRouter';
+import { usePathname } from 'next/navigation';
 
 interface Props {
   children?: React.ReactNode;
@@ -22,7 +22,7 @@ const page: FC<Props> = ({
   className, children, commentLabel
 }) => {
   const user = useSelector(state => state.user);
-  const router = useRouter();
+  const path = usePathname();
 
   const [content, setContent] = useState('');
   const [tags, setTags] = useState<string[]>([]);
@@ -47,7 +47,7 @@ const page: FC<Props> = ({
 
   if (!user?.account) return (
     <div className={cn('flex items-center justify-center h-48 border border-slate-500 rounded-sm', className)}>
-      <Link href={`/login?redirect=${router.path}`}>登入</Link>後留言
+      <Link href={`/login?redirect=${path}`}>登入</Link>後留言
     </div>
   );
 

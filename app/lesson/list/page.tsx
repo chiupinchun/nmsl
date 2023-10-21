@@ -6,37 +6,46 @@ import { useMemo, type FC, useState } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useRouter } from '@/hooks/useRouter';
 import Pagination from '@/components/ui/pagination';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import { ApiProgress } from '@/components/ui/progress';
 import PickupCard from '@/components/lesson/pickupCard';
 import Breadcrumbs from '@/components/breadcrumbs';
+import { usePathname, useRouter } from 'next/navigation';
 
 
 
-interface Props { }
-const page: FC<Props> = ({ }) => {
+interface Props {
+  searchParams: { [key: string]: string; };
+}
+const page: FC<Props> = ({ searchParams }) => {
   const router = useRouter();
-  const querySeries = useMemo(() => router.query.series ?? '', [router.query.series]);
+  const path = usePathname();
+  const querySeries = useMemo(() => searchParams.series ?? '', [searchParams.series]);
 
   const changeTab = (series: string) => {
-    const { series: _series, ...query } = router.query;
+    const { series: _series, ...query } = searchParams;
 
-    router.push({ query: series ? { ...query, series } : query });
+    router.push(
+      path + '?' +
+      new URLSearchParams(series ? { ...query, series } : query).toString()
+    );
   };
 
   const { data: pickupLessons } = useFetch(getPickupLesson);
 
   const { data: lessons, pending: lessonsPending } = useFetch(
-    () => getLessons(router.query),
-    [router.query]
+    () => getLessons(searchParams),
+    [searchParams]
   );
 
-  const [keyword, setKeyword] = useState(decodeURIComponent(router.query.search ?? ''));
+  const [keyword, setKeyword] = useState(decodeURIComponent(searchParams.search ?? ''));
   const search = () => {
-    router.push({ query: { ...router.query, search: keyword, page: '1' } });
+    router.push(
+      path + '?' +
+      new URLSearchParams({ ...searchParams, search: keyword, page: '1' }).toString()
+    );
   };
 
   return (
@@ -81,7 +90,7 @@ const page: FC<Props> = ({ }) => {
                 <div className='md:flex justify-between'>
                   <div className='space-x-2'>
                     {lesson.tags?.split(',')?.map((tag, i) => (
-                      <Link href={`/lesson/list?tag=${tag}`} key={tag + i}>
+                      <Link href={`/lesson/list?search=${tag}`} key={tag + i}>
                         <Badge>{tag}</Badge>
                       </Link>
                     ))}
