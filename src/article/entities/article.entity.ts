@@ -1,6 +1,7 @@
 import { User } from "src/user/entities/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { CreateArticleDto } from "../dto/create-article.dto";
+import { Comment } from "../comment/entities/comment.entity";
 
 @Entity()
 export class Article {
@@ -29,4 +30,7 @@ export class Article {
 
   @Column({ type: 'timestamp' })
   createTime: Date;
+
+  @OneToMany(() => Comment, comment => comment.article)
+  comments: Comment[];
 }

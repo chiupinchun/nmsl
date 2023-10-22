@@ -1,12 +1,11 @@
-
 import { Length } from "class-validator";
-import { CreateLessonDto } from "src/lesson/dto/create-lesson.dto";
+import { CreateArticleDto } from "src/article/dto/create-article.dto";
 import { CreateUserDto } from "src/user/dto/create-user.dto";
 
 export class CreateCommentDto {
   user: CreateUserDto;
 
-  lesson: CreateLessonDto;
+  article: CreateArticleDto;
 
   @Length(1, 1000, { message: '留言應為1-1000字' })
   content: string;

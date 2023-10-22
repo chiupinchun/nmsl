@@ -39,26 +39,11 @@ export class LessonService {
       }, []);
     }
 
-    return findAll(this.lesson, where, { order, page, show });
-
-    // const take = +show;
-    // const skip = (+page - 1) * take;
-
-    // const order = _order ? { [_order.replace(/^-/, '')]: _order[0] === '-' ? 'DESC' : 'ASC' } : undefined;
-
-    // try {
-    //   const [dataList, totalRecord] = await this.lesson.findAndCount({ where, order, skip, take });
-    //   return {
-    //     dataList, totalRecord,
-    //     totalPage: Math.ceil(totalRecord / take)
-    //   };
-    // } catch {
-    //   throw new BadRequestException();
-    // }
+    return findAll(this.lesson, where, { relations: { comments: { user: true } }, order, page, show });
   }
 
   findOne(id: number) {
-    return this.lesson.findOne({ where: { id } });
+    return this.lesson.findOne({ where: { id }, relations: { comments: { user: true } } });
   }
 
   update(id: number, updateLessonDto: UpdateLessonDto) {

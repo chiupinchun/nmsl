@@ -19,11 +19,11 @@ export class ArticleService {
 
   findAll(condition: Record<string, string> = {}) {
     const { page = 1, show = 10, ...where } = condition;
-    return findAll(this.article, where, { relations: { user: true }, order: '-createTime', page, show });
+    return findAll(this.article, where, { relations: { user: true, comments: { user: true } }, order: '-createTime', page, show });
   }
 
   findOne(id: number) {
-    return this.article.findOne({ where: { id }, relations: { user: true } });
+    return this.article.findOne({ where: { id }, relations: { user: true, comments: { user: true } } });
   }
 
   update(id: number, updateArticleDto: UpdateArticleDto) {
