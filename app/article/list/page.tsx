@@ -22,6 +22,7 @@ import { cn, marked } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { useRouter } from 'next/navigation';
 import ArticleCard from '@/components/article/card';
+import BreadCrumbs from '@/components/breadcrumbs';
 
 interface Props {
   searchParams: {
@@ -65,7 +66,6 @@ const page: FC<Props> = ({ searchParams }) => {
 
   return (
     <>
-      <h1 className='sr-only'>IT好文</h1>
       <aside className='hidden md:block fixed -mt-3 w-48 bg-slate-900' style={{ height: 'calc(100vh - var(--header-height))' }}>
         <Accordion defaultValue={Object.keys(searchParams)} type='multiple' className='px-3'>
           <AccordionItem value="type">
@@ -84,6 +84,7 @@ const page: FC<Props> = ({ searchParams }) => {
       </aside>
       <div className='flex justify-center'>
         <section>
+          <BreadCrumbs routes={[{ title: 'IT好文' }]} />
           {articles?.data?.map(article => (
             <ArticleCard article={article} key={article.id} className='mb-3 md:w-[640px]' inList />
           ))}

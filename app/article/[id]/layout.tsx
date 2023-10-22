@@ -14,7 +14,7 @@ export async function generateMetadata(
   const { title, content, type, tech } = article?.data ?? {};
 
   return {
-    title: `【${type}】${title}`,
+    title: `【${type}】${title}｜NMSL檸檬森林｜專業前端培訓課程`,
     description: editorDataWithoutHtml(content).slice(0, 60),
     keywords: `電腦,程式,軟體,網頁,IT${type ? `,${type}` : ''}${tech ? `,${tech}` : ''}`
   };

@@ -21,7 +21,6 @@ import {
   BarElement,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import Breadcrumbs from '@/components/breadcrumbs';
 import dynamic from 'next/dynamic';
 
 // const Screen3d = lazy(() => import('@/components/fountain/canvas'));
@@ -71,8 +70,6 @@ const page: FC<Props> = ({ }) => {
 
   return (
     <>
-      <h1 className='sr-only'>許願池</h1>
-      <Breadcrumbs routes={[{ title: '課程許願池' }]} />
       <section className='py-2'>
         <h2 className='text-xl font-bold'>課程許願池</h2>
         <p>

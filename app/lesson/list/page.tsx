@@ -11,7 +11,6 @@ import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import { ApiProgress } from '@/components/ui/progress';
 import PickupCard from '@/components/lesson/pickupCard';
-import Breadcrumbs from '@/components/breadcrumbs';
 import { usePathname, useRouter } from 'next/navigation';
 
 
@@ -50,8 +49,6 @@ const page: FC<Props> = ({ searchParams }) => {
 
   return (
     <>
-      <h1 className='sr-only'>課程列表</h1>
-      <Breadcrumbs routes={[{ title: '課程列表' }]} />
       <Carousel>
         {[...(pickupLessons?.data?.map(item => (
           <PickupCard data={item} key={item.id}></PickupCard>

@@ -1,4 +1,5 @@
 "use client";
+import { cn } from '@/lib/utils';
 import { Home } from 'lucide-react';
 import Link from 'next/link';
 import { Fragment, type FC } from 'react';
@@ -8,12 +9,13 @@ interface Props {
     title: string;
     href?: string;
   }[];
+  className?: string;
 }
 
-const page: FC<Props> = ({ routes }) => {
+const page: FC<Props> = ({ routes, className }) => {
   return (
     <>
-      <ul className='flex items-center relative my-3 ps-12 pe-4 h-10 w-min overflow-hidden border border-slate-700 rounded-xl'>
+      <ul className={cn('flex items-center relative my-3 ps-12 pe-4 h-10 w-min overflow-hidden border border-slate-700 rounded-xl', className)}>
         <li className='absolute z-10 left-2 px-2 bg-[hsl(var(--background))]'>
           <Link href='/'><Home height={18} width={18} /></Link>
         </li>
