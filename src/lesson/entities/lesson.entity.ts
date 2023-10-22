@@ -18,7 +18,7 @@ export class Lesson {
   @Column({ comment: '講師' })
   author: string;
 
-  @Column()
+  @Column({ length: 100 })
   title: string;
 
   @Column({ length: 10000 })

@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { LessonModule } from './lesson/lesson.module';
 import { NoticeGateway } from './notice/notice.gateway';
 import { WishModule } from './wish/wish.module';
+import { ArticleModule } from './article/article.module';
 
 @Module({
   imports: [
@@ -34,7 +35,7 @@ import { WishModule } from './wish/wish.module';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '7d' }
     }),
-    UserModule, TestModule, LessonModule, WishModule
+    UserModule, TestModule, LessonModule, WishModule, ArticleModule
   ],
   controllers: [AppController],
   providers: [AppService, NoticeGateway],

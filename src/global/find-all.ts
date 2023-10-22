@@ -30,7 +30,7 @@ export default async <T = unknown>(
       dataList, totalRecord,
       totalPage: Math.ceil(totalRecord / take)
     };
-  } catch {
-    throw new BadRequestException();
+  } catch (err) {
+    throw new BadRequestException(err);
   }
 };
