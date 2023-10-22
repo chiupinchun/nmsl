@@ -5,9 +5,10 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import type { FC } from 'react';
 
-const page: FC<GetLessonsPayload & { currentId?: number; }> = ({ currentId, ...condition }) => {
+const page: FC<GetLessonsPayload & { lessonId?: number; }> = ({ lessonId, ...condition }) => {
   const { data: lessons } = useFetch(
-    () => getLessons({ ...condition, show: '99999' })
+    () => lessonId ? getLessons({ ...condition, show: '99999' }) : Promise.resolve(null),
+    [lessonId]
   );
   return (
     <>
@@ -16,7 +17,7 @@ const page: FC<GetLessonsPayload & { currentId?: number; }> = ({ currentId, ...c
         <ol className='ps-8 overflow-y-auto list-decimal'>
           {lessons?.data?.map((lesson, idx) => (
             <li key={lesson.id} className=''>
-              <Link href={`/lesson/${lesson.id}`} className={cn('block px-3 py-1.5 hover:bg-slate-900', lesson.id === currentId ? 'bg-slate-700' : null)}>{lesson.title}</Link>
+              <Link href={`/lesson/${lesson.id}`} className={cn('block px-3 py-1.5 hover:bg-slate-900', lesson.id === lessonId ? 'bg-slate-700' : null)}>{lesson.title}</Link>
             </li>
           ))}
         </ol>

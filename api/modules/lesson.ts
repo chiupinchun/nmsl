@@ -9,6 +9,15 @@ export type GetLessonsPayload = {
   show?: string;
   order?: string;
 };
+export interface Comment {
+  id: number;
+  content: string;
+  user: {
+    id: string;
+    name: string;
+  };
+  createTime: string;
+}
 export interface Lesson {
   id: number;
   series: string;
@@ -21,6 +30,7 @@ export interface Lesson {
   views: number;
   weight: number;
   createTime: string;
+  comments: Comment[];
 }
 export const getLessons = (
   payload: GetLessonsPayload = {}
@@ -33,19 +43,10 @@ export const getLessons = (
 
 export const getPickupLesson = () => getLessons({ show: '5', order: '-weight' });
 
-export const getLessonById = (id: string) => {
-  return request<Lesson>('/lesson/' + id);
+export const getLessonById = (id: string, cache?: boolean) => {
+  return request<Lesson>('/lesson/' + id, { cache: cache ? 'force-cache' : 'no-cache' });
 };
 
-interface Comment {
-  id: number;
-  content: string;
-  user: {
-    id: string;
-    name: string;
-  };
-  createTime: string;
-}
 export const getComments = (
   payload: {
     page?: string;

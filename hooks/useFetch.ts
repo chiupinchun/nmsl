@@ -1,22 +1,24 @@
 import { type DependencyList, useEffect, useState } from "react";
 
 export default <T = unknown>(
-  fetch: () => Promise<T>,
+  fetch: (ctx: {
+    times: number;
+  }) => Promise<T>,
   deps: DependencyList = []
 ) => {
   const [data, setData] = useState<T | null>(null);
   const [pending, setPending] = useState(true);
-  const [flag, setFlag] = useState(true);
+  const [times, setTimes] = useState(0);
 
-  const refresh = () => setFlag(!flag);
+  const refresh = () => setTimes(times + 1);
 
   useEffect(() => {
     setPending(true);
-    fetch().then(res => {
+    fetch({ times }).then(res => {
       setData(res);
       setPending(false);
     });
-  }, deps.concat(flag));
+  }, deps.concat(times));
 
   return {
     data, pending, refresh

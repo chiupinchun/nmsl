@@ -16,7 +16,7 @@ export const postArticle = (payload: {
   });
 };
 
-interface Article {
+export interface Article {
   id: number;
   type: string;
   title: string;
@@ -35,12 +35,18 @@ export const getArticles = (payload: {
   });
 };
 
-interface Comment {
-
+export interface Comment {
+  id: number;
+  content: string;
+  user: {
+    id: string;
+    name: string;
+  };
+  createTime: string;
 }
 interface ArticleWithComment extends Article {
-  comment: Comment[];
+  comments: Comment[];
 }
-export const getArticle = (id: string) => {
-  return request<ArticleWithComment>('/article/' + id);
+export const getArticleById = (id: string, cache?: boolean) => {
+  return request<ArticleWithComment>('/article/' + id, { cache: cache ? 'force-cache' : 'no-store' });
 };

@@ -17,13 +17,13 @@ const page: FC<Props> = ({ routes }) => {
         <li className='absolute z-10 left-2 px-2 bg-[hsl(var(--background))]'>
           <Link href='/'><Home height={18} width={18} /></Link>
         </li>
-        {'>'}
+        {'／'}
         {routes.map((route, idx) => (
           <Fragment key={idx}>
             <li className='px-2 w-max' style={{ zIndex: 9 - idx }}>
               <Link href={route.href ?? ''} onClick={(e) => route.href || e.preventDefault()} className=''>{route.title}</Link>
             </li>
-            {idx < routes.length - 1 && '>'}
+            {idx < routes.length - 1 && '／'}
           </Fragment>
         ))}
       </ul>

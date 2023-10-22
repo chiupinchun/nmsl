@@ -21,6 +21,7 @@ import Link from 'next/link';
 import { cn, marked } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { useRouter } from 'next/navigation';
+import ArticleCard from '@/components/article/card';
 
 interface Props {
   searchParams: {
@@ -45,7 +46,6 @@ const page: FC<Props> = ({ searchParams }) => {
       const hasMoreArticle = articles?.data && (articles.data.length > (batch - 2) * 10);
 
       if (nearBottom && hasMoreArticle) {
-        console.log(batch);
         setBatch(batch + 1);
       }
     };
@@ -81,27 +81,11 @@ const page: FC<Props> = ({ searchParams }) => {
             ))}
           </AccordionItem>
         </Accordion>
-
       </aside>
       <div className='flex justify-center'>
         <section>
           {articles?.data?.map(article => (
-            <Card key={article.id} className='relative mb-3 w-screen md:w-[640px]'>
-              <CardHeader>
-                <CardTitle className='flex justify-between items-center'>
-                  <Link href={`/article/${article.id}`}>【{article.type}】{article.title}</Link>
-                  {article.tech && <Badge onClick={() => linkTo({ tech: article.tech })} className='cursor-pointer'>{article.tech}</Badge>}
-                </CardTitle>
-                <CardDescription className='flex justify-between'>
-                  <span>{article.user.name}</span>
-                  <span>{new Date(article.createTime).toLocaleDateString()}</span>
-                </CardDescription>
-              </CardHeader>
-              <CardContent dangerouslySetInnerHTML={{ __html: marked(article.content) }} className='max-h-72 overflow-hidden'></CardContent>
-              <CardFooter className='absolute bottom-0 right-2'>
-                <Link href={`/article/${article.id}`} className='p-3 bg-slate-900 rounded-xl text-slate-300 font-bold text-md transition-all hover:text-lg'>完整內容&gt;&gt;</Link>
-              </CardFooter>
-            </Card>
+            <ArticleCard article={article} key={article.id} className='mb-3 md:w-[640px]' inList />
           ))}
         </section>
         <Post refresh={refresh} />
