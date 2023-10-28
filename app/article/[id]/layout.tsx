@@ -36,7 +36,9 @@ export default async function RootLayout({
 
   return <>
     <h1 className='sr-only'>【{type}】{title}</h1>
-    <BreadCrumbs routes={routes} />
-    {children}
+    <main className='container pt-3'>
+      <BreadCrumbs routes={routes} />
+      {children}
+    </main>
   </>;
 }

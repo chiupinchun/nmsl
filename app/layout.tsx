@@ -24,7 +24,7 @@ function RootLayout({
       <body className='pt-header-height'>
         <Provider>
           <Header></Header>
-          <main className='container pt-3'>{children}</main>
+          {children}
           <InitComponent />
           <Toaster></Toaster>
         </Provider>

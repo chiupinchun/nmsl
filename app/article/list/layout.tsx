@@ -20,6 +20,8 @@ export default async function RootLayout({
 
   return <>
     <h1 className='sr-only'>IT好文</h1>
-    {children}
+    <main className='container pt-3'>
+      {children}
+    </main>
   </>;
 }

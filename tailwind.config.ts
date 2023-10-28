@@ -80,7 +80,8 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       spacing: {
-        'header-height': 'var(--header-height)'
+        'header-height': 'var(--header-height)',
+        'noheader-screen': 'calc(100vh - var(--header-height))'
       }
     }
   },

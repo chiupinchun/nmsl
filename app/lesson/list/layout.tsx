@@ -21,7 +21,8 @@ export default async function RootLayout({
 
   return <>
     <h1 className='sr-only'>課程列表</h1>
-    <Breadcrumbs routes={[{ title: '課程列表' }]} />
-    {children}
+    <main className='container pt-3'>
+      <Breadcrumbs routes={[{ title: '課程列表' }]} />{children}
+    </main>
   </>;
 }

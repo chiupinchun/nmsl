@@ -24,7 +24,7 @@ import { Bar } from "react-chartjs-2";
 import dynamic from 'next/dynamic';
 
 // const Screen3d = lazy(() => import('@/components/fountain/canvas'));
-const Screen3d = dynamic(() => import('@/components/fountain/canvas'));
+const Screen3d = dynamic(() => import('@/components/r3f/fountain'));
 
 ChartJS.register(
   CategoryScale,

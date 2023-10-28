@@ -1,32 +1,41 @@
-import { request } from '@/api/core';
-import { Button } from '@/components/ui/button';
-import useFetch from 'swr';
-import { useState } from 'react';
-import Carousel from '@/components/ui/carousel';
-import { getPickupLesson } from '@/api/modules/lesson';
-import PickupCard from '@/components/lesson/pickupCard';
-import Link from 'next/link';
+"use client";
+import Carousel from '@/components/root/carousel';
+import Banner from '@/components/root/banner';
+import Suggest from '@/components/root/suggest';
+import { useEffect, useRef, useState } from 'react';
 
-export default async function Home() {
-  const pickupLessons = await getPickupLesson();
+export default function Home() {
+  const sections = [
+    <Banner />,
+    <Carousel />,
+    <Suggest />
+  ];
+  const sectionRefs = sections.map(() => useRef<HTMLElement>(null!));
 
+  useEffect(() => {
+    if (window.scrollY < 52 && window.innerWidth >= 768) sectionRefs[0].current.scrollIntoView({ behavior: 'smooth' });
+
+    const onscroll = (e: WheelEvent) => {
+      e.preventDefault();
+      // console.log(window.scrollY, sectionRefs.map(ref => ref.current.offsetTop));
+
+      const direct = e.deltaY > 0 ? 1 : -1;
+      sectionRefs.find(ref => direct * ref.current.offsetTop >= direct * (window.scrollY + 52))?.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+    document.addEventListener('wheel', onscroll, { passive: false });
+
+    return () => {
+      document.removeEventListener('wheel', onscroll);
+    };
+  }, []);
 
   return (
     <>
-      <h1 className='text-2xl font-bold'>NMSL檸檬森林</h1>
-      <h2 className='text-xl font-bold'>專業前端培訓</h2>
-      <h2 className='mt-5 text-xl font-bold'>精選課程</h2>
-      <Carousel>
-        {[...(pickupLessons?.data?.map(item => (
-          <PickupCard data={item} key={item.id}></PickupCard>
-        )) ?? [])]}
-      </Carousel>
-      <Link href='/lesson/list' className='block mx-auto px-6 py-2 w-fit border border-slate-700 rounded-3xl hover:bg-slate-900'>點我看更多</Link>
-      <h2 className='mt-5 text-xl font-bold'>沒找到想看的課程？你可以——</h2>
-      <div className='my-5 space-x-5'>
-
-        <Link href='/fountain' className='px-4 py-2 border border-slate-700 rounded-3xl hover:bg-slate-900'>點我去許願</Link>
-      </div>
+      {sections.map((component, idx) => (
+        <section key={idx} ref={sectionRefs[idx]} className='md:pt-header-height md:h-screen md:box-border'>
+          {component}
+        </section>
+      ))}
     </>
   );
 }

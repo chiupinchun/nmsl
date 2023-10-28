@@ -66,7 +66,7 @@ const page: FC<Props> = ({ searchParams }) => {
 
   return (
     <>
-      <aside className='hidden md:block fixed -mt-3 w-48 bg-slate-900' style={{ height: 'calc(100vh - var(--header-height))' }}>
+      <aside className='hidden md:block fixed -mt-3 w-48 h-noheader-screen bg-slate-900'>
         <Accordion defaultValue={Object.keys(searchParams)} type='multiple' className='px-3'>
           <AccordionItem value="type">
             <AccordionTrigger>文章分類</AccordionTrigger>

@@ -1,10 +1,9 @@
 "use client";
-import React, { FC, useRef, useState } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import React, { FC } from 'react';
+import { Canvas } from '@react-three/fiber';
 import * as Three from 'three';
 import { Stats, OrbitControls, Environment, PerspectiveCamera } from '@react-three/drei';
-import { Model as Fountain } from './fountain';
-import { Button } from '@/components/ui/button';
+import { Model as Fountain } from './fountainModule';
 
 interface Props { }
 const page: FC<Props> = ({ }) => {
