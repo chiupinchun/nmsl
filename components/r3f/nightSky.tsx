@@ -1,5 +1,5 @@
 "use client";
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 
 interface StarProps {
@@ -16,11 +16,27 @@ const Star: React.FC<StarProps> = ({ position }) => {
 };
 
 const CameraControls: React.FC = () => {
-  const { camera } = useThree();
+  const { camera, mouse } = useThree();
 
-  useFrame(({ mouse }) => {
-    camera.rotation.set(mouse.y / 3, -mouse.x / 3, 0);
-  });
+  // useFrame(({ }) => {
+  //   camera.rotation.set(mouse.y / 3, -mouse.x / 3, 0);
+  // });
+
+  useEffect(() => {
+    let rawX: number, rawY: number;
+    const onMouseMove = (e: MouseEvent) => {
+      const { clientX, clientY } = e;
+      if (!rawX) rawX = clientX;
+      if (!rawY) rawY = clientY;
+      camera.rotation.set((clientY - rawY) / 3000, (rawX - clientX) / 3000, 0);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+
+    return () => {
+      document.removeEventListener('mousemove', onMouseMove);
+    };
+  }, []);
 
   return null;
 };

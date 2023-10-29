@@ -13,14 +13,14 @@ export default function Home() {
   const sectionRefs = sections.map(() => useRef<HTMLElement>(null!));
 
   useEffect(() => {
-    if (window.scrollY < 52 && window.innerWidth >= 768) sectionRefs[0].current.scrollIntoView({ behavior: 'smooth' });
+    if (window.scrollY < 54 && window.innerWidth >= 768) sectionRefs[0].current.scrollIntoView({ behavior: 'smooth' });
 
     const onscroll = (e: WheelEvent) => {
       e.preventDefault();
       // console.log(window.scrollY, sectionRefs.map(ref => ref.current.offsetTop));
 
       const direct = e.deltaY > 0 ? 1 : -1;
-      sectionRefs.find(ref => direct * ref.current.offsetTop >= direct * (window.scrollY + 52))?.current?.scrollIntoView({ behavior: 'smooth' });
+      sectionRefs.find(ref => direct * ref.current.offsetTop >= direct * (window.scrollY + 54))?.current?.scrollIntoView({ behavior: 'smooth' });
     };
     document.addEventListener('wheel', onscroll, { passive: false });
 
