@@ -22,8 +22,35 @@ export class User {
   @Column({ select: false })
   password: string;
 
-  @Column()
+  @Column({ length: 16 })
   name: string;
+
+  @Column({ type: 'text' })
+  avatar: string;
+
+  @Column({ type: 'enum', enum: ['不公開', '男', '女', '其他'] })
+  sex: string;
+
+  @Column({ length: 50, default: '' })
+  contract: string;
+
+  @Column({ length: 50, default: '' })
+  adress: string;
+
+  @Column({ length: 50, default: '' })
+  position: string;
+
+  @Column({ length: 50, default: '' })
+  field: string;
+
+  @Column({ length: 100, default: '' })
+  techs: string;
+
+  @Column({ length: 1000, default: '' })
+  description: string;
+
+  @Column({ type: 'bool', default: true })
+  checkable: boolean;
 
   @Column({ type: 'timestamp' })
   createTime: Date;

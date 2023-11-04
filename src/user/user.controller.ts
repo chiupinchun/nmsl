@@ -61,9 +61,19 @@ export class UserController {
     return this.userService.findOne({});
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+  @Patch()
+  @UseGuards(AuthGuard)
+  update(
+    @Auth() id: string,
+    @Body() updateUserDto: UpdateUserDto
+  ) {
+    if (updateUserDto.avatar) updateUserDto.avatar = updateUserDto.avatar.replace('<', '');
+
+    // 不可更改
+    delete updateUserDto.account;
+    delete updateUserDto.password;
+
+    return this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')

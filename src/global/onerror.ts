@@ -6,8 +6,8 @@ export class ErrorHandler implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const request = ctx.getRequest<Request>();
     const response = ctx.getResponse<Response>();
-    const status = exception.getStatus();
-    const exceptionRes = exception.getResponse();
+    const status = exception?.getStatus ? exception.getStatus() : 500;
+    const exceptionRes = exception.getResponse ? exception.getResponse() : exception;
 
 
     response.status(status).json({
