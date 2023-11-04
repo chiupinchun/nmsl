@@ -1,17 +1,30 @@
 import useCookie from '@/hooks/useCookie';
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   id: '',
   account: '',
-  name: ''
+  name: '',
+  avatar: '',
+
+  sex: '',
+  contract: '',
+  adress: '',
+  position: '',
+  field: '',
+  techs: '',
+  description: '',
+
+  checkable: true,
+
+  createTime: ''
 };
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUserInfo(state, action) {
+    setUserInfo(state, action: PayloadAction<Partial<typeof initialState>>) {
       Object.assign(state, action.payload);
     },
     logout(state, action) {

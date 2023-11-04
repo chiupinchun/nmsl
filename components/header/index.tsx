@@ -1,6 +1,6 @@
 "use client";
 import Link from 'next/link';
-import type { FC, MouseEventHandler } from 'react';
+import { useState, type FC, type MouseEventHandler } from 'react';
 import Image from 'next/image';
 import config from './config';
 import useCookie from '@/hooks/useCookie';
@@ -52,6 +52,8 @@ const page: FC<Props> = ({ }) => {
     setToken(null);
   };
 
+  const [openMemberPopover, setOpenMemberPopover] = useState(false);
+
   return (
     <>
       <header className='fixed z-20 top-0 w-full border-b-2 border-slate-500 shadow-sm shadow-slate-500 bg-black bg-opacity-75'>
@@ -63,7 +65,7 @@ const page: FC<Props> = ({ }) => {
               {
                 user?.account ?
                   <a className='flex items-center p-3 h-full'>
-                    <Popover>
+                    <Popover open={openMemberPopover} onOpenChange={setOpenMemberPopover}>
                       <PopoverTrigger>
                         <Avatar>
                           <AvatarImage src={Hato.src} />
@@ -74,7 +76,7 @@ const page: FC<Props> = ({ }) => {
                         <div>歡迎，{user.name}。</div>
                         <hr className='my-3' />
                         <ul className='flex justify-between space-x-2'>
-                          <li><Link href='/' className='block p-2 border rounded border-slate-500'>前往會員中心</Link></li>
+                          <li><Link href='/member' className='block p-2 border rounded border-slate-500' onClick={() => setOpenMemberPopover(false)}>前往會員中心</Link></li>
                           <li><a onClick={logout} className='block p-2 border rounded border-slate-500 cursor-pointer'>登出</a></li>
                         </ul>
                       </PopoverContent>
@@ -101,7 +103,7 @@ const page: FC<Props> = ({ }) => {
                         <span>{user.name}</span>
                       </div>
                       <ul className='flex justify-between space-x-2'>
-                        <li><Link href='/' className='block p-2 border rounded border-slate-500'>前往會員中心</Link></li>
+                        <li><Link href='/member' className='block p-2 border rounded border-slate-500'>前往會員中心</Link></li>
                         <li><a onClick={logout} className='block p-2 border rounded border-slate-500 cursor-pointer'>登出</a></li>
                       </ul>
                     </> :
