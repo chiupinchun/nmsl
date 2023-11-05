@@ -16,7 +16,7 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, select: false })
   account: string;
 
   @Column({ select: false })
@@ -25,7 +25,7 @@ export class User {
   @Column({ length: 16 })
   name: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   avatar: string;
 
   @Column({ type: 'enum', enum: ['不公開', '男', '女', '其他'] })

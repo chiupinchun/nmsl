@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, Inject, Res, UnauthorizedException, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, Inject, Res, UnauthorizedException, Req, UseGuards, HttpException, HttpStatus, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -38,7 +38,7 @@ export class UserController {
 
     if (!(user && await bcrypt.compare(password, user.password))) throw new UnauthorizedException({ message: '帳號或密碼錯誤。' });
 
-    const token = user.id && await this.jwtService.signAsync({ id: user.id });
+    const token = user.id && await this.jwtService.signAsync({ id: user.id, account: user.account });
     if (token) res.cookie('token', token);
 
     delete user.password;
@@ -51,14 +51,17 @@ export class UserController {
     return this.userService.findOne({ id });
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.userService.findAll();
-  // }
+  @Get('all')
+  findAll(@Query() condition: Record<string, string>) {
+    return this.userService.findAll(condition);
+  }
 
   @Get(':id')
-  findOne() {
-    return this.userService.findOne({});
+  async findOne(@Param('id') id: string) {
+    const user = await this.userService.findOne({ id });
+    if (!user) throw new HttpException('不存在的使用者。', HttpStatus.NOT_FOUND);
+    if (!user.checkable) throw new HttpException('該使用者已關閉履歷。', HttpStatus.FORBIDDEN);
+    return user;
   }
 
   @Patch()

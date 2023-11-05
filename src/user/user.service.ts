@@ -3,9 +3,10 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import findAll from 'src/global/find-all';
 
 @Injectable()
 export class UserService {
@@ -23,13 +24,27 @@ export class UserService {
     });
   }
 
-  findAll() {
-    return `This action returns all user`;
+  findAll(
+    condition: Record<string, string> = {}
+  ) {
+    const {
+      page = 1,
+      show = 10,
+      ...where
+    } = condition;
+
+    return findAll(
+      this.user,
+      { ...where, checkable: true },
+      { page, show }
+    );
   }
 
-  async findOne(condition: Record<string, string>) {
+  async findOne(
+    where: FindOptionsWhere<User>
+  ) {
     return this.user.findOne({
-      where: condition
+      where
     });
   }
 
