@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 
-export async function generateMetadata(
-  { params }: { params: { id: string; }; }
-): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: 'IT好文｜NMSL檸檬森林｜專業前端培訓課程',
@@ -12,10 +10,9 @@ export async function generateMetadata(
 }
 
 export default async function RootLayout({
-  children, params
+  children
 }: {
   children: React.ReactNode;
-  params: { id: string; };
 }) {
 
   return <>

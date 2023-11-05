@@ -28,7 +28,6 @@ export const signup = (payload: SignupPayload) => {
 
 export interface UserInfo {
   id: string;
-  account: string;
   name: string;
   avatar: string;
 
@@ -42,8 +41,18 @@ export interface UserInfo {
   checkable: boolean;
   createTime: string;
 }
-export const getUserInfo = () => {
-  return request<UserInfo>('/user');
+export const getUserInfo = (id?: string, cache?: boolean) => {
+  return request<UserInfo>(id ? `/user/${id}` : '/user', { cache: cache ? 'force-cache' : 'no-store' });
+};
+
+export const getUsers = (
+  query: {
+    page?: string;
+    tech?: string;
+    show?: string;
+  } = {}
+) => {
+  return request<UserInfo[]>('/user/all', { query });
 };
 
 export const updateUserInfo = (payload: Partial<UserInfo>) => {

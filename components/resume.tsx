@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Image from 'next/image';
-import Hato from '@/assets/images/hato2.png';
+import defaultAvatar from '@/assets/images/defaultAvatar.jpg';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Badge } from './ui/badge';
@@ -89,7 +89,7 @@ const resume: FC<ResumeProps> = ({ userInfo, children, editMode = false }) => {
           <div className='flex flex-col justify-between'>
             <div>
               <figure className='relative'>
-                <Image src={userInfo.avatar || Hato} width={0} height={0} alt='大頭照' priority className='w-80 h-auto' />
+                <Image src={userInfo.avatar || defaultAvatar} width={0} height={0} alt='大頭照' priority className='w-80 h-auto' />
                 {editMode && (<>
                   <figcaption onClick={() => avatarInput.current.click()} className='absolute top-0 left-0 flex justify-center items-center w-full h-full bg-slate-700 bg-opacity-50 opacity-0 cursor-pointer transition hover:opacity-100'><Upload width={50} height={50} /></figcaption>
                   <input type="file" ref={avatarInput} style={{ display: 'none' }} onChange={updateAvatar} />
@@ -138,7 +138,7 @@ const resume: FC<ResumeProps> = ({ userInfo, children, editMode = false }) => {
               <ResumeInputItem editMode={editMode} model='field' />
             </label>
             <label className='col-span-6 overflow-x-auto'>擅長技術
-              <ul className='flex items-center space-x-3'>
+              <ul className='flex items-center p-1 space-x-3'>
                 {userInfo.techs ?
                   userInfo.techs.split(',').map(tag => (
                     <li onClick={() => editMode && dispatch(setUserInfo({ techs: userInfo.techs.replace(tag, '').replace(',,', ',') }))} key={tag}>

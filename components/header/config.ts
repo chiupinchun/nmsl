@@ -17,6 +17,10 @@ export default {
     {
       title: 'IT好文',
       href: '/article/list'
+    },
+    {
+      title: '優秀人才',
+      href: '/resume/list'
     }
   ] as NavItem[]
 };

@@ -21,7 +21,7 @@ function RootLayout({
 }) {
   return (
     <html lang="en" className='dark'>
-      <body className='pt-header-height'>
+      <body className='pt-header-height scroll-bar'>
         <Provider>
           <Header></Header>
           {children}

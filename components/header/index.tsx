@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/sheet";
 import { AlignJustify } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import Hato from '@/assets/images/hato2.png';
+import defaultAvatar from '@/assets/images/defaultAvatar.jpg';
 import { UserInfo } from '@/api/modules/user';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -44,12 +44,14 @@ const RouteList = ({ className, children }: { className?: string; children?: Rea
 interface Props { }
 const page: FC<Props> = ({ }) => {
   const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   const [_, setToken] = useCookie('token');
   const logout: MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault();
-    actions.logout(undefined);
+    dispatch(actions.logout(undefined));
     setToken(null);
+    setOpenMemberPopover(false);
   };
 
   const [openMemberPopover, setOpenMemberPopover] = useState(false);
@@ -68,7 +70,7 @@ const page: FC<Props> = ({ }) => {
                     <Popover open={openMemberPopover} onOpenChange={setOpenMemberPopover}>
                       <PopoverTrigger>
                         <Avatar>
-                          <AvatarImage src={Hato.src} />
+                          <AvatarImage src={defaultAvatar.src} />
                           <AvatarFallback>:3</AvatarFallback>
                         </Avatar>
                       </PopoverTrigger>
@@ -97,7 +99,7 @@ const page: FC<Props> = ({ }) => {
                     <>
                       <div className='flex items-center space-x-5'>
                         <Avatar>
-                          <AvatarImage src={Hato.src} />
+                          <AvatarImage src={defaultAvatar.src} />
                           <AvatarFallback>:3</AvatarFallback>
                         </Avatar>
                         <span>{user.name}</span>

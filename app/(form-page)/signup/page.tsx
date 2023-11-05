@@ -38,7 +38,7 @@ const page: FC<Props> = ({ searchParams }) => {
     },
     password: {
       text: '密碼',
-      type: 'string',
+      type: 'password',
       range: [8, 20],
       default: ''
     },
