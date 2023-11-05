@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from 'next/image';
-import defaultAvatar from '@/assets/images/defaultAvatar.jpg';
+import defaultAvatar from '@/assets/images/defaultAvatar.webp';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import Pagination from '@/components/ui/pagination';

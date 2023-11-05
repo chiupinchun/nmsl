@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/sheet";
 import { AlignJustify } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import defaultAvatar from '@/assets/images/defaultAvatar.jpg';
+import defaultAvatar from '@/assets/images/defaultAvatar.webp';
 import { UserInfo } from '@/api/modules/user';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {

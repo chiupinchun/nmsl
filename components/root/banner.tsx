@@ -2,7 +2,7 @@
 import { cn } from '@/lib/utils';
 import { useState, type FC, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import defaultAvatar from '@/assets/images/defaultAvatar.jpg';
+import hatoImg from '@/assets/images/hato2.webp';
 import { Badge } from '../ui/badge';
 import {
   Popover,
@@ -55,7 +55,7 @@ const page: FC<Props> = ({ }) => {
         <h1 className={cn('text-2xl font-bold transition-all duration-500', process >= Process.TITLE ? '' : 'me-[50vw] opacity-0')}>NMSL檸檬森林</h1>
         <h2 className={cn('text-xl font-bold transition-all duration-500', process >= Process.SUBTITLE ? '' : 'ms-[25vw] opacity-0')}>專業前端培訓</h2>
         <div className={cn('md:flex transition-all duration-500', process >= Process.DESCRIBE ? '' : 'scale-0 opacity-0')}>
-          <Image src={defaultAvatar} alt='defaultAvatar' width={defaultAvatar.width} height={defaultAvatar.height} priority className='mx-auto md:mx-0'></Image>
+          <Image src={hatoImg} alt='Hato' width={hatoImg.width} height={hatoImg.height} priority className='mx-auto md:mx-0'></Image>
           <div className='md:ms-3'>
             <h3>講師：Hato</h3>
             <ul className='my-3'>

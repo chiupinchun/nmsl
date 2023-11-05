@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Image from 'next/image';
-import defaultAvatar from '@/assets/images/defaultAvatar.jpg';
+import defaultAvatar from '@/assets/images/defaultAvatar.webp';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Badge } from './ui/badge';

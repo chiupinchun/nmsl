@@ -2,7 +2,7 @@
 import { useState, type FC, useEffect } from 'react';
 import Image from 'next/image';
 import { Facebook, Link, Twitter } from 'lucide-react';
-import LineIcon from '@/assets/images/LINE_Brand_icon.png';
+import LineIcon from '@/assets/images/LINE_Brand_icon.webp';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import useCopy from '@/hooks/useCopy';
 
