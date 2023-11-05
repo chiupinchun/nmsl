@@ -1,6 +1,5 @@
 import { request } from "../core";
 
-
 export type GetLessonsPayload = {
   tag?: string;
   series?: string;
@@ -44,7 +43,7 @@ export const getLessons = (
 export const getPickupLesson = () => getLessons({ show: '5', order: '-weight' });
 
 export const getLessonById = (id: string, cache?: boolean) => {
-  return request<Lesson>('/lesson/' + id, { cache: cache ? 'force-cache' : 'no-cache' });
+  return request<Lesson>('/lesson/' + id, { next: { revalidate: cache ? 60 * 60 : 0 } });
 };
 
 export const getComments = (
@@ -56,4 +55,10 @@ export const getComments = (
 ) => {
   const { lessonId, ...others } = payload;
   return request<Comment[]>('/lesson-comment/' + lessonId, { query: others });
+};
+
+export const viewCount = (id: string) => {
+  return request(`/lesson/${id}/count`, {
+    method: 'PATCH'
+  });
 };

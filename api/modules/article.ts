@@ -48,5 +48,5 @@ interface ArticleWithComment extends Article {
   comments: Comment[];
 }
 export const getArticleById = (id: string, cache?: boolean) => {
-  return request<ArticleWithComment>('/article/' + id, { cache: cache ? 'force-cache' : 'no-store' });
+  return request<ArticleWithComment>('/article/' + id, { next: { revalidate: cache ? 60 * 60 : 0 } });
 };

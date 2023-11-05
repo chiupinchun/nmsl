@@ -1,8 +1,8 @@
 "use client";
-import { getLessonById } from '@/api/modules/lesson';
+import { getLessonById, viewCount } from '@/api/modules/lesson';
 import { marked } from '@/lib/utils';
 import { redirect, useRouter } from 'next/navigation';
-import type { FC } from 'react';
+import { useEffect, type FC } from 'react';
 import LessonHead from '@/components/lesson/head';
 import LessonList from '@/components/lesson/list';
 import Comments from '@/components/comments';
@@ -19,8 +19,12 @@ const page: FC<Props> = ({ params }) => {
   const { toast } = useToast();
 
   const { data: lesson, refresh } = useFetch(
-    () => getLessonById(params.id)
+    () => getLessonById(params.id, true)
   );
+
+  useEffect(() => {
+    viewCount(params.id);
+  }, []);
 
   const comment = async (
     payload: { content: string, tags: string[]; }

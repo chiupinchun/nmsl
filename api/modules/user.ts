@@ -42,7 +42,7 @@ export interface UserInfo {
   createTime: string;
 }
 export const getUserInfo = (id?: string, cache?: boolean) => {
-  return request<UserInfo>(id ? `/user/${id}` : '/user', { cache: cache ? 'force-cache' : 'no-store' });
+  return request<UserInfo>(id ? `/user/${id}` : '/user', { next: { revalidate: cache ? 60 * 60 : 0 } });
 };
 
 export const getUsers = (

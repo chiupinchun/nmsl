@@ -18,18 +18,18 @@ const page: FC<Props> = ({ data }) => {
     setCollected(favLessons.includes(data.id));
   }, []);
 
-  const collect = () => {
-    const favLessons = JSON.parse(localStorage.getItem('fav-lessons') ?? '[]');
-    const idx = favLessons.indexOf(data.id);
-    if (idx > -1) {
-      favLessons.splice(idx, 1);
-      localStorage.setItem('fav-lessons', JSON.stringify(favLessons));
-      setCollected(false);
-    } else {
-      localStorage.setItem('fav-lessons', JSON.stringify(favLessons.concat(data.id)));
-      setCollected(true);
-    }
-  };
+  // const collect = () => {
+  //   const favLessons = JSON.parse(localStorage.getItem('fav-lessons') ?? '[]');
+  //   const idx = favLessons.indexOf(data.id);
+  //   if (idx > -1) {
+  //     favLessons.splice(idx, 1);
+  //     localStorage.setItem('fav-lessons', JSON.stringify(favLessons));
+  //     setCollected(false);
+  //   } else {
+  //     localStorage.setItem('fav-lessons', JSON.stringify(favLessons.concat(data.id)));
+  //     setCollected(true);
+  //   }
+  // };
 
   return (
     <>
@@ -39,7 +39,8 @@ const page: FC<Props> = ({ data }) => {
           {data.title}
           <span className='hidden md:inline'> - {data.author}</span>
         </h2>
-        <Star onClick={collect} color='hotpink' fill={collected ? 'hotpink' : undefined} className='cursor-pointer hover:scale-x-110' />
+        {/* <Star onClick={collect} color='hotpink' fill={collected ? 'hotpink' : undefined} className='cursor-pointer hover:scale-x-110' /> */}
+        <span>瀏覽數：{data.views}</span>
       </div>
       <div className='flex justify-between items-center my-3'>
         <div className='space-x-2'>
