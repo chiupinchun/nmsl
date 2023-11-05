@@ -54,17 +54,19 @@ const page: FC<Props> = ({ }) => {
       <div className='flex flex-col md:justify-center items-center md:h-[500px]'>
         <h1 className={cn('text-2xl font-bold transition-all duration-500', process >= Process.TITLE ? '' : 'me-[50vw] opacity-0')}>NMSL檸檬森林</h1>
         <h2 className={cn('text-xl font-bold transition-all duration-500', process >= Process.SUBTITLE ? '' : 'ms-[25vw] opacity-0')}>專業前端培訓</h2>
-        <div className={cn('md:flex transition-all duration-500', process >= Process.DESCRIBE ? '' : 'scale-0 opacity-0')}>
-          <Image src={hatoImg} alt='Hato' width={hatoImg.width} height={hatoImg.height} priority className='mx-auto md:mx-0'></Image>
-          <div className='md:ms-3'>
-            <h3>講師：Hato</h3>
-            <ul className='my-3'>
-              <li>2022年8月從前端工程師培訓機構結訓。</li>
-              <li>2022年9月於1111人力銀行任職前端工程師。</li>
-              <li>2023年6月起開始管理5人小團隊。</li>
-              <li>2023年8月正式升為主任。</li>
-              <li>略懂Vue3源碼，精通Nuxt、Vue、Next、React、Nest、TypeScript的單詞拼寫。</li>
-            </ul>
+        <div className={cn('md:flex transition-all duration-500 h-max', process >= Process.DESCRIBE ? '' : 'scale-0 opacity-0')}>
+          <Image src={hatoImg} alt='Hato' width={hatoImg.width} height={hatoImg.height} priority className='mx-auto my-3 md:mx-0 md:my-0'></Image>
+          <div className='flex flex-col justify-between md:ms-5 h-full'>
+            <div>
+              <h3>講師：Hato</h3>
+              <ul className='my-3'>
+                <li>2022年8月從前端工程師培訓機構結訓。</li>
+                <li>2022年9月於1111人力銀行任職前端工程師。</li>
+                <li>2023年6月起開始管理5人小團隊。</li>
+                <li>2023年8月正式升為主任。</li>
+                <li>略懂Vue3源碼，精通Nuxt、Vue、Next、React、Nest、TypeScript的單詞拼寫。</li>
+              </ul>
+            </div>
             <div className='p-2 border border-slate-700 rounded'>
               <h4 className='mb-1'>專業技能</h4>
               <ul className='flex space-x-2'>

@@ -4,14 +4,6 @@ import Post from '@/components/article/post';
 import useFetch from '@/hooks/useFetch';
 import { useState, type FC, useEffect } from 'react';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   Accordion,
   AccordionContent,
   AccordionItem,
@@ -85,9 +77,11 @@ const page: FC<Props> = ({ searchParams }) => {
       <div className='flex justify-center'>
         <section>
           <BreadCrumbs routes={[{ title: 'IT好文' }]} />
-          {articles?.data?.map(article => (
-            <ArticleCard article={article} key={article.id} className='mb-3 md:w-[640px]' inList />
-          ))}
+          <ul>
+            {articles?.data?.map(article => (
+              <li key={article.id}><ArticleCard article={article} className='mb-3 md:w-[640px]' inList /></li>
+            ))}
+          </ul>
         </section>
         <Post refresh={refresh} />
       </div>

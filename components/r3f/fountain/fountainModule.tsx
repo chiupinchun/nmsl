@@ -16,9 +16,14 @@ export function Model(props: GroupProps) {
 
   const meshRef = useRef<Three.Group>(null);
 
-  useFrame((_, delta) => {
-    meshRef.current && (meshRef.current.rotation.y += delta / 10);
-  });
+  useFrame(
+    // (_, delta) => {
+    //   meshRef.current && (meshRef.current.rotation.y += delta / 10);
+    // }
+    ({ mouse }) => {
+      meshRef.current && meshRef.current.rotation.set(meshRef.current.rotation.x, mouse.x, meshRef.current.rotation.z);
+    }
+  );
 
   return (
     <group {...props} dispose={null} ref={meshRef}>
