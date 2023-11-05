@@ -27,6 +27,11 @@ export class LessonController {
     return this.lessonService.update(+id, updateLessonDto);
   }
 
+  @Patch(':id/count')
+  count(@Param('id') id: string) {
+    return this.lessonService.view(+id);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.lessonService.remove(+id);

@@ -50,6 +50,14 @@ export class LessonService {
     return this.lesson.update({ id }, updateLessonDto);
   }
 
+  view(id: number) {
+    return this.lesson.createQueryBuilder()
+      .update(Lesson)
+      .set({ views: () => 'views + 1' })
+      .where('id = :id', { id })
+      .execute();
+  }
+
   remove(id: number) {
     return this.lesson.delete({ id });
   }

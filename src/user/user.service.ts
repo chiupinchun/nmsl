@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { FindOptionsWhere, Repository } from 'typeorm';
+import { FindOptionsWhere, Like, Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import findAll from 'src/global/find-all';
@@ -30,12 +30,23 @@ export class UserService {
     const {
       page = 1,
       show = 10,
-      ...where
+      keyword,
+      ...others
     } = condition;
+
+    const searchableCols = ['name', 'sex', 'adress', 'position', 'field', 'techs'];
+    const where: FindOptionsWhere<User>[] = [];
+
+    if (keyword || Object.keys(others).length) {
+      searchableCols.forEach(col => {
+        if (keyword) where.push({ [col]: Like(`%${keyword}%`), checkable: true });
+        if (others[col]) where.push({ [col]: Like(`%${others[col]}%`), checkable: true });
+      });
+    }
 
     return findAll(
       this.user,
-      { ...where, checkable: true },
+      where,
       { page, show }
     );
   }
