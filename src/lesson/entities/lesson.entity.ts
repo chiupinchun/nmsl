@@ -24,7 +24,7 @@ export class Lesson {
   @Column({ length: 10000 })
   content: string;
 
-  @Column({ comment: '影片連結' })
+  @Column({ comment: '影片連結', nullable: true })
   src: string;
 
   @Column({ comment: '搜尋用tag' })
