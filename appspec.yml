@@ -3,10 +3,11 @@ os: linux
 files:
   - source: /
     destination: /home/nmsl/backend/
+file_exists_behavior: OVERWRITE
 hooks:
-  BeforeInstall:
-    - location: scripts/install-dependencies.sh
-      runas: root
+  # BeforeInstall:
+  #   - location: scripts/install-dependencies.sh
+  #     runas: root
   AfterInstall:
     - location: scripts/build-and-start.sh
       runas: root
