@@ -1,0 +1,12 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/nmsl/backend/
+hooks:
+  BeforeInstall:
+    - location: scripts/install-dependencies.sh
+      runas: root
+  AfterInstall:
+    - location: scripts/build-and-start.sh
+      runas: root
