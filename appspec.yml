@@ -11,3 +11,5 @@ hooks:
   AfterInstall:
     - location: scripts/build-and-start.sh
       runas: root
+rollback:
+  enabled: false
