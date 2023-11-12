@@ -10,6 +10,7 @@ import { LessonModule } from './lesson/lesson.module';
 import { NoticeGateway } from './notice/notice.gateway';
 import { WishModule } from './wish/wish.module';
 import { ArticleModule } from './article/article.module';
+import 'dotenv/config';
 
 @Module({
   imports: [
