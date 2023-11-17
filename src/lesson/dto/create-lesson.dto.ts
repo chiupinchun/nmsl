@@ -15,7 +15,6 @@ export class CreateLessonDto {
   @Length(0, 10000, { message: '內文不得超過10000字' })
   content: string;
 
-  @Length(0, 500, { message: '連結不得超過500字' })
   src: string;
 
   @Length(0, 500, { message: 'tags超出字數限制' })
