@@ -37,4 +37,8 @@ const handleDelete = (_: number, row: typeof props.dataList[0]) => {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+:deep(.cell) {
+  max-height: 5rem;
+}
+</style>

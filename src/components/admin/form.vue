@@ -30,7 +30,7 @@
       <template v-else-if="col.type === 'markdown'">
         <div v-show="previewIdx === idx" v-html="parseMarkdown(form[col.model] as string | undefined ?? '')"
           style="width: 100%"></div>
-        <el-input v-show="previewIdx !== idx" type="textarea" v-model="form[col.model]"></el-input>
+        <el-input v-show="previewIdx !== idx" type="textarea" v-model="form[col.model]" :rows="20"></el-input>
         <el-button @click="previewIdx = previewIdx === undefined ? idx : undefined">預覽</el-button>
       </template>
       <el-input v-else v-model="form[col.model]" :type="col.type" :placeholder="col.placeholder" />
