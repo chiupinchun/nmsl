@@ -14,7 +14,15 @@ async function bootstrap() {
     prefix: '/images'
   });
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://localhost:5173'],
+    origin: [
+      // 正式前台
+      `http://${process.env.IP ?? 'localhost'}`,
+      // 正式後台
+      `http://${process.env.IP ?? 'localhost'}:2999`,
+      // 測試前、後台
+      'http://localhost:3000',
+      'http://localhost:5173'
+    ],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTION'],
     credentials: true
   });
