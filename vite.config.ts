@@ -12,7 +12,7 @@ export default defineConfig({
   build: {
     outDir: 'docs'
   },
-  base: '/nmsl-admin/',
+  // base: '/nmsl-admin/',
   server: {
     host: '0.0.0.0'
   }
