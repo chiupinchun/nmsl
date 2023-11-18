@@ -325,7 +325,7 @@ export default function <T extends FieldValues = Record<string, unknown>>(
     <Form {...form}>
       <h2 className='mb-3 text-center'>{title}</h2>
       <form className="space-y-8">
-        {Object.keys(data).map(key => (
+        {Object.keys(data).map((key, idx) => (
           <FormField
             key={key}
             control={form.control}
@@ -334,7 +334,9 @@ export default function <T extends FieldValues = Record<string, unknown>>(
               <FormItem>
                 <FormLabel>{data[key].text}</FormLabel>
                 <FormControl>
-                  <Input placeholder={getPlaceholder(data[key])} {...field} type={data[key].type} />
+                  <Input placeholder={getPlaceholder(data[key])} {...field} type={data[key].type} onKeyUp={e => {
+                    idx === Object.keys(data).length - 1 && e.key === 'Enter' && form.handleSubmit(submit.onSubmit)();
+                  }} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

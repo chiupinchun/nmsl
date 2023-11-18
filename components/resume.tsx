@@ -50,7 +50,6 @@ interface ResumeProps {
   editMode?: boolean;
 }
 const resume: FC<ResumeProps> = ({ userInfo, children, editMode = false }) => {
-  const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const avatarInput = useRef<HTMLInputElement>(null!);
@@ -82,7 +81,7 @@ const resume: FC<ResumeProps> = ({ userInfo, children, editMode = false }) => {
       <Card>
         <CardHeader className='block md:flex flex-row justify-between items-center'>
           <CardTitle>自我介紹</CardTitle>
-          <Share url={`/resume/${user.id}`} />
+          <Share url={`/resume/${userInfo.id}`} />
         </CardHeader>
 
         <CardContent className='md:flex flex-row-reverse justify-between items-stretch overflow-hidden'>

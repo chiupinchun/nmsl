@@ -30,7 +30,7 @@ const page: FC<Props> = ({ }) => {
           <>
             {articles.data.map(article => (
               <li key={article.id} className=''>
-                <ArticleCard article={article} key={article.id} className='w-[unset] h-72' inList />
+                <ArticleCard article={article} key={article.id} className='w-[unset] h-72 overflow-hidden' inList />
               </li>
             ))}
             <li>

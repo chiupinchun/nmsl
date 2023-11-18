@@ -15,7 +15,6 @@ export default (name: string): [
   }, []);
 
   const setCookie = (value: string | null, options: SetCookieOpt = {}) => {
-    console.log(`${name}=;max-age=0`);
     if (!value) document.cookie = `${name}=;path=/;max-age=0`;
     else {
       document.cookie = `${name}=${value};path=/;` + Object.keys(options).map(key => `${key}=${options[key as keyof SetCookieOpt]}`).join(';');

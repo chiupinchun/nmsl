@@ -12,9 +12,7 @@ export default () => {
       textArea.select();
 
       try {
-        var successful = document.execCommand('copy');
-        var message = successful ? '复制成功' : '复制失败';
-        console.log(message);
+        document.execCommand('copy');
       } catch (err) {
         console.warn(err);
       }

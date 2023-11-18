@@ -103,7 +103,7 @@ const page: FC<Props> = ({
             </SelectContent>
           </Select>
         </div>
-        {previewMode ? <div className='markdown-body' dangerouslySetInnerHTML={{ __html: marked(content) }} /> : <Textarea rows={10} placeholder='支援markdown語法' className='my-5' value={content} onChange={e => setContent(e.target.value)} id='editor' />}
+        {previewMode ? <div className='p-2 max-h-96 overflow-auto markdown-body scroll-bar' dangerouslySetInnerHTML={{ __html: marked(content) }} /> : <Textarea rows={10} placeholder='支援markdown語法' className='my-5' value={content} onChange={e => setContent(e.target.value)} id='editor' />}
         <div className='flex justify-between'>
           <Button onClick={() => setPreviewMode(!previewMode)} variant='ghost'>預覽</Button>
           <div>

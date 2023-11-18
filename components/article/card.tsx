@@ -69,7 +69,7 @@ const page: FC<Props> = ({ article, className, inList, changeMode }) => {
             {article.tech && <Badge className='cursor-pointer'><Link href={`/article/list?tech=${article.tech}`}>{article.tech}</Link></Badge>}
           </div>
           <CardDescription className='flex justify-between'>
-            <span>{article.user.name}</span>
+            <Link href={`/resume/${article.user.id}`}>{article.user.name}</Link>
             <span>{new Date(article.createTime).toLocaleDateString()}</span>
           </CardDescription>
         </CardHeader>
