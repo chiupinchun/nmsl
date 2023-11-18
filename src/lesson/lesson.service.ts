@@ -28,6 +28,9 @@ export class LessonService {
 
     // where
     let where: FindOptionsWhere<Lesson> | FindOptionsWhere<Lesson>[] = rawWhere;
+
+    if (where.series) where.series = Like(`%${where.series}%`);
+
     if (search) {
       const needSearchCols = ['title', 'content', 'tags', 'author'];
       const keywords = search.split(' ');
