@@ -27,10 +27,10 @@ export class ArticleService {
   }
 
   update(id: number, updateArticleDto: UpdateArticleDto) {
-    return `This action updates a #${id} article`;
+    return this.article.update({ id }, updateArticleDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} article`;
+    return this.article.delete({ id });
   }
 }
