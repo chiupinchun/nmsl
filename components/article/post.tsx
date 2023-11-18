@@ -50,7 +50,7 @@ const page: FC<Props> = ({ refresh }) => {
     } else toast({ variant: 'destructive', description: res?.message ?? '發生錯誤！' });
   };
 
-  if (!user.account) return (
+  if (!user.id) return (
     <section className='fixed right-5 top-16'>
       <Link href='/login?redirect=/article/list' className='block p-3 bg-white rounded-xl border text-black'>登入後發文</Link>
     </section>

@@ -49,7 +49,7 @@ const page: FC<Props> = ({ }) => {
           </>
         )}
       </ul>
-      <Link href='/lesson/list' className='block mx-auto px-6 py-2 w-fit border border-slate-700 rounded-3xl hover:bg-slate-900'>更多文章</Link>
+      <Link href='/article/list' className='block mx-auto px-6 py-2 w-fit border border-slate-700 rounded-3xl hover:bg-slate-900'>更多文章</Link>
     </>
   );
 };

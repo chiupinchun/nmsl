@@ -20,14 +20,14 @@ const page: FC<Props> = ({ searchParams }) => {
   const { toast } = useToast();
 
   const checkLoginAndRedirect = () => {
-    if (!user.account) return;
+    if (!user.id) return;
     const { redirect } = searchParams;
     if (redirect) {
       if (redirect.includes('http')) location.href = redirect;
       else router.push(redirect);
     } else router.push('/');
   };
-  useEffect(checkLoginAndRedirect, [user.account]);
+  useEffect(checkLoginAndRedirect, [user.id]);
 
   const formData: FormConfig<SignupPayload> = {
     account: {

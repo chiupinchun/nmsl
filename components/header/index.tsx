@@ -65,7 +65,7 @@ const page: FC<Props> = ({ }) => {
           <RouteList className='hidden md:flex h-full'>
             <li className='hidden md:block'>
               {
-                user?.account ?
+                user?.id ?
                   <a className='flex items-center p-3 h-full'>
                     <Popover open={openMemberPopover} onOpenChange={setOpenMemberPopover}>
                       <PopoverTrigger>
@@ -95,7 +95,7 @@ const page: FC<Props> = ({ }) => {
             <SheetContent>
               <SheetHeader className='mt-3 p-3 border-b border-slate-500'>
                 {
-                  user?.account ?
+                  user?.id ?
                     <>
                       <div className='flex items-center space-x-5'>
                         <Avatar>

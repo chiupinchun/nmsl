@@ -45,7 +45,7 @@ const page: FC<Props> = ({
     if (await onSubmit({ content, tags })) setContent('');
   };
 
-  if (!user?.account) return (
+  if (!user?.id) return (
     <div className={cn('flex items-center justify-center h-48 border border-slate-500 rounded-sm', className)}>
       <Link href={`/login?redirect=${path}`}>登入</Link>後留言
     </div>

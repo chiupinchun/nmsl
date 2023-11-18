@@ -83,7 +83,7 @@ const page: FC<Props> = ({ }) => {
         <Screen3d />
         <div className='absolute bottom-10 w-full text-center'>
           <Button className='px-10 py-5 rounded-[9999px]' variant='secondary'>
-            {user.account ? (
+            {user.id ? (
               <span onClick={() => setOpenWishModal(true)}>點我許願</span>
             ) : (
               <Link href='/login?redirect=/fountain'>登入後即可許願</Link>

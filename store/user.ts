@@ -1,9 +1,9 @@
+import { UserInfo } from '@/api/modules/user';
 import useCookie from '@/hooks/useCookie';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+const initialState: UserInfo = {
   id: '',
-  account: '',
   name: '',
   avatar: '',
 
