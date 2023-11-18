@@ -20,8 +20,16 @@ export class UserController {
 
   @Post()
   @ApiOperation({ summary: '會員註冊' })
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  async create(
+    @Body() createUserDto: CreateUserDto,
+    @Res({ passthrough: true }) res: Response
+  ) {
+    const user = await this.userService.create(createUserDto);
+
+    const token = user.id && await this.jwtService.signAsync({ id: user.id, account: user.account });
+    if (token) res.cookie('token', token);
+
+    return user;
   }
 
   @Post('login')

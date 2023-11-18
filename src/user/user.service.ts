@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadGatewayException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -21,6 +21,8 @@ export class UserService {
     return this.user.save(data).then(res => {
       const { password, ...other } = res;
       return other;
+    }).catch(() => {
+      throw new BadGatewayException('此組帳號已被註冊');
     });
   }
 
