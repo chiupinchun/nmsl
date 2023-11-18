@@ -73,7 +73,7 @@ const page: FC<Props> = ({ }) => {
                     <Popover open={openMemberPopover} onOpenChange={setOpenMemberPopover}>
                       <PopoverTrigger>
                         <Avatar>
-                          <AvatarImage src={defaultAvatar.src} />
+                          <AvatarImage src={user.avatar ?? defaultAvatar.src} />
                           <AvatarFallback>:3</AvatarFallback>
                         </Avatar>
                       </PopoverTrigger>
@@ -102,7 +102,7 @@ const page: FC<Props> = ({ }) => {
                     <>
                       <div className='flex items-center space-x-5'>
                         <Avatar>
-                          <AvatarImage src={defaultAvatar.src} />
+                          <AvatarImage src={user.avatar ?? defaultAvatar.src} />
                           <AvatarFallback>:3</AvatarFallback>
                         </Avatar>
                         <span>{user.name}</span>
