@@ -27,13 +27,13 @@ import {
 } from "@/components/ui/popover";
 
 
-const RouteList = ({ className, children }: { className?: string; children?: React.ReactNode; }) => {
+const RouteList = ({ className, children, onLink = () => { } }: { className?: string; children?: React.ReactNode; onLink?: () => void; }) => {
 
   return (
     <ul className={cn(className)}>
       {config.list.map((item, idx) => (
         <li key={idx}>
-          <Link href={item.href} className='flex items-center p-3 h-full'>{item.title}</Link>
+          <Link onClick={onLink} href={item.href} className='flex items-center p-3 h-full'>{item.title}</Link>
         </li>
       ))}
       {children}
@@ -52,9 +52,12 @@ const page: FC<Props> = ({ }) => {
     dispatch(actions.logout(undefined));
     setToken(null);
     setOpenMemberPopover(false);
+    setOpenMobileMenu(false);
   };
 
   const [openMemberPopover, setOpenMemberPopover] = useState(false);
+
+  const [openMobileMenu, setOpenMobileMenu] = useState(false);
 
   return (
     <>
@@ -90,7 +93,7 @@ const page: FC<Props> = ({ }) => {
           </RouteList>
 
           {/* 手機 */}
-          <Sheet>
+          <Sheet open={openMobileMenu} onOpenChange={setOpenMobileMenu}>
             <SheetTrigger className='md:hidden'><AlignJustify /></SheetTrigger>
             <SheetContent>
               <SheetHeader className='mt-3 p-3 border-b border-slate-500'>
@@ -105,7 +108,7 @@ const page: FC<Props> = ({ }) => {
                         <span>{user.name}</span>
                       </div>
                       <ul className='flex justify-between space-x-2'>
-                        <li><Link href='/member' className='block p-2 border rounded border-slate-500'>前往會員中心</Link></li>
+                        <li><Link onClick={() => setOpenMobileMenu(false)} href='/member' className='block p-2 border rounded border-slate-500'>前往會員中心</Link></li>
                         <li><a onClick={logout} className='block p-2 border rounded border-slate-500 cursor-pointer'>登出</a></li>
                       </ul>
                     </> :
@@ -113,7 +116,7 @@ const page: FC<Props> = ({ }) => {
                 }
               </SheetHeader>
 
-              <RouteList />
+              <RouteList onLink={() => setOpenMobileMenu(false)} />
             </SheetContent>
           </Sheet>
         </nav>
