@@ -49,7 +49,7 @@ const page: FC<Props> = ({ params }) => {
         {lesson?.data && <iframe width="100%" height="630" src={`https://www.youtube.com/embed/${lesson.data.src}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen loading='lazy' className='me-3 h-full'></iframe>}
         <LessonList series={lesson?.data?.series} lessonId={lesson?.data?.id}></LessonList>
       </div>
-      <div dangerouslySetInnerHTML={{ __html: marked(lesson?.data?.content) }}></div>
+      <div className='markdown-body' dangerouslySetInnerHTML={{ __html: marked(lesson?.data?.content) }}></div>
 
       <Comments comments={lesson?.data?.comments} onSubmit={comment} className='my-10' commentLabel='課堂討論留言板' />
     </>

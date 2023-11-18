@@ -81,7 +81,7 @@ const page: FC<Props> = ({ refresh }) => {
             </label>
             <Button onClick={() => setPreviewMode(!previewMode)} variant='ghost'>預覽</Button>
           </div>
-          {previewMode ? <div dangerouslySetInnerHTML={{ __html: marked(content) }} /> : <Textarea rows={10} placeholder='支援markdown語法' className='my-5' value={content} onChange={e => setContent(e.target.value)} id='editor' />}
+          {previewMode ? <div className='markdown-body' dangerouslySetInnerHTML={{ __html: marked(content) }} /> : <Textarea rows={10} placeholder='支援markdown語法' className='my-5' value={content} onChange={e => setContent(e.target.value)} id='editor' />}
           <div className='flex justify-between'>
             <Select value={tech} onValueChange={(value) => setTech(value as typeof techOptions[number])}>
               <SelectTrigger className="w-[180px]">

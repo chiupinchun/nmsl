@@ -25,7 +25,7 @@ const page: FC<Props> = ({ article, className, inList }) => {
             <span>{new Date(article.createTime).toLocaleDateString()}</span>
           </CardDescription>
         </CardHeader>
-        <CardContent dangerouslySetInnerHTML={{ __html: marked(article.content) }} className={cn(inList ? 'max-h-72 overflow-hidden' : '')}></CardContent>
+        <CardContent dangerouslySetInnerHTML={{ __html: marked(article.content) }} className={cn(inList ? 'max-h-72 overflow-hidden' : '', 'markdown-body')}></CardContent>
         {inList && <CardFooter className='absolute bottom-0 right-2'>
           <Link href={`/article/${article.id}`} className='p-2 bg-slate-900 rounded-xl text-slate-300 font-bold text-sm transition-all hover:text-base'>完整內容&gt;&gt;</Link>
         </CardFooter>}

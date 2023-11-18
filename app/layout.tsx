@@ -1,4 +1,5 @@
 import '@/assets/css/global.css';
+import '@/assets/css/markdown.css';
 import Header from '@/components/header';
 import type { Metadata } from 'next';
 import InitComponent from '@/app/init';

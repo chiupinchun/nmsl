@@ -51,7 +51,7 @@ const page: FC<Props> = ({ data }) => {
           ))}
         </div>
         <div className='hidden md:block'>
-          {new Date(data.createTime).toLocaleString()}
+          {new Date(data.createTime).toLocaleString('zh-TW')}
         </div>
       </div>
     </>
