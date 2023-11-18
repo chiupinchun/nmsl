@@ -4,7 +4,8 @@ import { Minus, Plus } from 'lucide-react';
 import { useState, type FC } from 'react';
 import { Textarea } from '../ui/textarea';
 import { cn, marked } from '@/lib/utils';
-import { postArticle, typeOptions, techOptions } from '@/api/modules/article';
+import { postArticle, typeOptions, techOptions, PostArticlePayload } from '@/api/modules/article';
+import { request } from '@/api/core';
 import { useToast } from '../ui/use-toast';
 import { Input } from '../ui/input';
 import {
@@ -18,36 +19,54 @@ import { useSelector } from '@/store';
 import Link from 'next/link';
 
 interface Props {
-  refresh: () => void;
+  rawData?: Partial<PostArticlePayload>;
+  onSubmit: (payload: PostArticlePayload) => Promise<boolean | undefined>;
+  onCancel: () => void;
+  className?: string;
 }
 
-const page: FC<Props> = ({ refresh }) => {
+const page: FC<Props> = ({
+  className, onSubmit, onCancel, rawData = {}
+}) => {
   const user = useSelector(state => state.user);
   const { toast } = useToast();
 
-  const [showPostBlock, setShowPostBlock] = useState(false);
+  const data = {
+    type: rawData.type ?? '技術',
+    title: rawData.title ?? '',
+    content: rawData.content ?? '',
+    tech: rawData.tech
+  };
 
-  const [type, setType] = useState<typeof typeOptions[number]>('技術');
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [tech, setTech] = useState<typeof techOptions[number]>();
+  const [type, setType] = useState<typeof typeOptions[number]>(data.type);
+  const [title, setTitle] = useState(data.title);
+  const [content, setContent] = useState(data.content);
+  const [tech, setTech] = useState<typeof techOptions[number] | undefined>(data.tech);
 
   const [previewMode, setPreviewMode] = useState(false);
 
+  const reset = () => {
+    setType(data.type);
+    setTitle(data.title);
+    setContent(data.content);
+    setTech(data.tech);
+    setPreviewMode(false);
+  };
+
+  const cancel = () => {
+    reset();
+    onCancel();
+  };
+
   const submit = async () => {
     if (!content.trim()) return toast({ variant: 'destructive', description: '未輸入內容。' });
-    const res = await postArticle({
+
+    if (await onSubmit({
       title, type, tech,
       content: content.trim()
-    });
-    if (res?.success) {
-      toast({ description: '已成功送出。' });
-      setContent('');
-      setPreviewMode(false);
-      setType('技術');
-      setShowPostBlock(false);
-      refresh();
-    } else toast({ variant: 'destructive', description: res?.message ?? '發生錯誤！' });
+    })) {
+      reset();
+    }
   };
 
   if (!user.id) return (
@@ -58,43 +77,41 @@ const page: FC<Props> = ({ refresh }) => {
 
   return (
     <>
-      <section className='fixed right-5 top-16'>
-        <Button onClick={() => setShowPostBlock(!showPostBlock)} className='flex ms-auto w-fit'>
-          <span className={cn(showPostBlock ? 'max-w-0' : 'max-w-2xl', 'overflow-hidden transition-all')}>發表文章</span>{showPostBlock ? <Minus width={18} height={18} /> : <Plus width={18} height={18} />}
-        </Button>
-        <form onSubmit={e => e.preventDefault()} className={cn(showPostBlock ? 'max-w-screen-2xl max-h-screen scale-100' : 'max-w-0 max-h-0 scale-0', 'mt-5 p-5 w-[90vw] md:w-[600px] box-border border rounded-2xl bg-slate-900 overflow-hidden transition-all')}>
-          <div className='md:flex'>
-            <Select value={type} onValueChange={(value) => setType(value as typeof typeOptions[number])}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Theme" />
-              </SelectTrigger>
-              <SelectContent>
-                {typeOptions.map(type => <SelectItem value={type} key={type}>{type}</SelectItem>)}
-              </SelectContent>
-            </Select>
+      <form onSubmit={e => e.preventDefault()} className={className}>
+        <div className='md:flex'>
+          <Select value={type} onValueChange={(value) => setType(value as typeof typeOptions[number])}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Theme" />
+            </SelectTrigger>
+            <SelectContent>
+              {typeOptions.map(type => <SelectItem value={type} key={type}>{type}</SelectItem>)}
+            </SelectContent>
+          </Select>
 
-            <Input value={title} onChange={e => setTitle(e.target.value)} placeholder='標題' className='block ms-2'></Input>
+          <Input value={title} onChange={e => setTitle(e.target.value)} placeholder='標題' className='block ms-2'></Input>
+        </div>
+        <div className='flex justify-between items-center my-5'>
+          <label htmlFor='editor'>
+            文章內容
+          </label>
+          <Select value={tech} onValueChange={(value) => setTech(value as typeof techOptions[number])}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="使用技術" />
+            </SelectTrigger>
+            <SelectContent>
+              {techOptions.map(type => <SelectItem value={type} key={type}>{type}</SelectItem>)}
+            </SelectContent>
+          </Select>
+        </div>
+        {previewMode ? <div className='markdown-body' dangerouslySetInnerHTML={{ __html: marked(content) }} /> : <Textarea rows={10} placeholder='支援markdown語法' className='my-5' value={content} onChange={e => setContent(e.target.value)} id='editor' />}
+        <div className='flex justify-between'>
+          <Button onClick={() => setPreviewMode(!previewMode)} variant='ghost'>預覽</Button>
+          <div>
+            <Button onClick={cancel} variant='destructive' className='me-5'>取消</Button>
+            <Button onClick={submit}>送出</Button>
           </div>
-          <div className='flex justify-between items-center my-5'>
-            <label htmlFor='editor'>
-              文章內容
-            </label>
-            <Select value={tech} onValueChange={(value) => setTech(value as typeof techOptions[number])}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="使用技術" />
-              </SelectTrigger>
-              <SelectContent>
-                {techOptions.map(type => <SelectItem value={type} key={type}>{type}</SelectItem>)}
-              </SelectContent>
-            </Select>
-          </div>
-          {previewMode ? <div className='markdown-body' dangerouslySetInnerHTML={{ __html: marked(content) }} /> : <Textarea rows={10} placeholder='支援markdown語法' className='my-5' value={content} onChange={e => setContent(e.target.value)} id='editor' />}
-          <div className='flex justify-between'>
-            <Button onClick={() => setPreviewMode(!previewMode)} variant='ghost'>預覽</Button>
-            <Button onClick={submit}>發文</Button>
-          </div>
-        </form>
-      </section>
+        </div>
+      </form>
     </>
   );
 };

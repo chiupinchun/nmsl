@@ -1,10 +1,10 @@
 "use client";
-import { getArticleById, getArticles, techOptions } from '@/api/modules/article';
+import { PostArticlePayload, editArticle, getArticleById, getArticles, techOptions } from '@/api/modules/article';
 import useFetch from '@/hooks/useFetch';
-import { editorDataWithoutHtml, marked } from '@/lib/utils';
-import { useSearchParams } from 'next/navigation';
-import type { FC } from 'react';
+import { editorDataWithoutHtml } from '@/lib/utils';
+import { useState, type FC } from 'react';
 import ArticleCard from '@/components/article/card';
+import ArticlePost from '@/components/article/post';
 import Link from 'next/link';
 import Image from 'next/image';
 import loading from '@/assets/images/loading.svg';
@@ -46,6 +46,21 @@ const page: FC<Props> = (ctx) => {
     [article?.data?.tech]
   );
 
+  const [editMode, setEditMode] = useState(false);
+
+  const onEdit = async (payload: PostArticlePayload) => {
+    if (!article?.data) return;
+    const res = await editArticle(article.data.id, payload);
+    if (res?.success) {
+      toast({ description: '已成功送出。' });
+
+      setEditMode(false);
+      refresh();
+
+      return true;
+    } else toast({ variant: 'destructive', description: res?.message ?? '發生錯誤！' });
+  };
+
   const comment = async (
     payload: { content: string, tags: string[]; }
   ) => {
@@ -66,7 +81,11 @@ const page: FC<Props> = (ctx) => {
     <>
       <div className='md:flex items-start relative mb-5'>
         <section className='w-full md:me-5 mb-5 md:mb-0'>
-          {article?.data && <ArticleCard article={article.data} className='w-full' />}
+          {article?.data && (
+            editMode ?
+              <ArticlePost rawData={article.data} onSubmit={onEdit} onCancel={() => setEditMode(false)} /> :
+              <ArticleCard article={article.data} className='w-full' changeMode={() => setEditMode(true)} />
+          )}
         </section>
         <aside className='md:sticky bottom-0 p-2 w-80 border rounded' style={{ top: 'calc(var(--header-height) + 1rem)' }}>
           <h3 className='text-xl font-bold'>推薦文章</h3>

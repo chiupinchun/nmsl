@@ -4,24 +4,36 @@ import { UserInfo } from "./user";
 export const typeOptions = ['技術', '發問', '徵才'] as const;
 export const techOptions = ['前端', '後端', '全端', '爬蟲', 'AI', '區塊鏈', '算法', '運維', '網安', '測試'] as const;
 
-export const postArticle = (payload: {
+export interface PostArticlePayload {
   title: string;
-  type: string;
+  type: typeof typeOptions[number];
   content: string;
-  tech?: string;
-}) => {
+  tech?: typeof techOptions[number];
+}
+export const postArticle = (payload: PostArticlePayload) => {
   return request('/article', {
     method: 'POST',
     body: payload
   });
 };
+export const editArticle = (id: number, payload: PostArticlePayload) => {
+  return request(`/article/${id}`, {
+    method: 'PATCH',
+    body: payload
+  });
+};
+export const deleteArticle = (id: number) => {
+  return request(`/article/${id}`, {
+    method: 'DELETE'
+  });
+};
 
 export interface Article {
   id: number;
-  type: string;
+  type: typeof typeOptions[number];
   title: string;
   content: string;
-  tech: string;
+  tech: typeof techOptions[number];
   user: Partial<UserInfo>;
   createTime: string;
 }

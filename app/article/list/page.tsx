@@ -1,5 +1,5 @@
 "use client";
-import { getArticles, techOptions, typeOptions } from '@/api/modules/article';
+import { PostArticlePayload, getArticles, postArticle, techOptions, typeOptions } from '@/api/modules/article';
 import Post from '@/components/article/post';
 import useFetch from '@/hooks/useFetch';
 import { useState, type FC, useEffect } from 'react';
@@ -15,6 +15,9 @@ import { Badge } from '@/components/ui/badge';
 import { useRouter } from 'next/navigation';
 import ArticleCard from '@/components/article/card';
 import BreadCrumbs from '@/components/breadcrumbs';
+import { Button } from '@/components/ui/button';
+import { Minus, Plus } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 interface Props {
   searchParams: {
@@ -25,6 +28,7 @@ interface Props {
 
 const page: FC<Props> = ({ searchParams }) => {
   const router = useRouter();
+  const { toast } = useToast();
 
   const [batch, setBatch] = useState(1);
 
@@ -32,6 +36,8 @@ const page: FC<Props> = ({ searchParams }) => {
     () => getArticles({ ...searchParams, show: `${batch * 10}` }),
     [batch, searchParams]
   );
+
+  const [showPostBlock, setShowPostBlock] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -54,6 +60,18 @@ const page: FC<Props> = ({ searchParams }) => {
       else if (searchParams[key]) query[key] = query[key] ?? searchParams[key]!;
     }
     router.push('/article/list?' + new URLSearchParams(query).toString());
+  };
+
+  const onPost = async (payload: PostArticlePayload) => {
+    const res = await postArticle(payload);
+    if (res?.success) {
+      toast({ description: '已成功送出。' });
+
+      setShowPostBlock(false);
+      refresh();
+
+      return true;
+    } else toast({ variant: 'destructive', description: res?.message ?? '發生錯誤！' });
   };
 
   return (
@@ -83,7 +101,12 @@ const page: FC<Props> = ({ searchParams }) => {
             ))}
           </ul>
         </section>
-        <Post refresh={refresh} />
+        <section className='fixed right-5 top-16'>
+          <Button onClick={() => setShowPostBlock(!showPostBlock)} className='flex ms-auto w-fit'>
+            <span className={cn(showPostBlock ? 'max-w-0' : 'max-w-2xl', 'overflow-hidden transition-all')}>發表文章</span>{showPostBlock ? <Minus width={18} height={18} /> : <Plus width={18} height={18} />}
+          </Button>
+          <Post onSubmit={onPost} onCancel={() => setShowPostBlock(false)} className={cn(showPostBlock ? 'max-w-screen-2xl max-h-screen scale-100' : 'max-w-0 max-h-0 scale-0', 'mt-5 p-5 w-[90vw] md:w-[600px] box-border border rounded-2xl bg-slate-900 overflow-hidden transition-all')} />
+        </section>
       </div>
     </>
   );
