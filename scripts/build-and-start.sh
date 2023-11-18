@@ -1,4 +1,8 @@
 #!/bin/bash
 cd /home/nmsl/main
 # yarn build
-pm2 list | grep "main" && pm2 restart main || pm2 start yarn --name "main" -- start
+if pm2 list | grep -q "main"; then
+    pm2 stop main
+    pm2 delete main
+fi
+pm2 start yarn --name "main" -- start

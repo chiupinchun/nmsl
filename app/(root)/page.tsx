@@ -22,10 +22,10 @@ export default function Home() {
       const direct = e.deltaY > 0 ? 1 : -1;
       sectionRefs.find(ref => direct * ref.current.offsetTop >= direct * (window.scrollY + 54))?.current?.scrollIntoView({ behavior: 'smooth' });
     };
-    document.addEventListener('wheel', onscroll, { passive: false });
+    document.body.addEventListener('wheel', onscroll, { passive: false });
 
     return () => {
-      document.removeEventListener('wheel', onscroll);
+      document.body.removeEventListener('wheel', onscroll);
     };
   }, []);
 
