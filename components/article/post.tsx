@@ -62,7 +62,7 @@ const page: FC<Props> = ({ refresh }) => {
         <Button onClick={() => setShowPostBlock(!showPostBlock)} className='flex ms-auto w-fit'>
           <span className={cn(showPostBlock ? 'max-w-0' : 'max-w-2xl', 'overflow-hidden transition-all')}>發表文章</span>{showPostBlock ? <Minus width={18} height={18} /> : <Plus width={18} height={18} />}
         </Button>
-        <form className={cn(showPostBlock ? 'max-w-screen-2xl max-h-screen scale-100' : 'max-w-0 max-h-0 scale-0', 'mt-5 p-5 w-[90vw] md:w-[600px] box-border border rounded-2xl bg-slate-900 overflow-hidden transition-all')}>
+        <form onSubmit={e => e.preventDefault()} className={cn(showPostBlock ? 'max-w-screen-2xl max-h-screen scale-100' : 'max-w-0 max-h-0 scale-0', 'mt-5 p-5 w-[90vw] md:w-[600px] box-border border rounded-2xl bg-slate-900 overflow-hidden transition-all')}>
           <div className='md:flex'>
             <Select value={type} onValueChange={(value) => setType(value as typeof typeOptions[number])}>
               <SelectTrigger className="w-[180px]">
@@ -79,10 +79,6 @@ const page: FC<Props> = ({ refresh }) => {
             <label htmlFor='editor'>
               文章內容
             </label>
-            <Button onClick={() => setPreviewMode(!previewMode)} variant='ghost'>預覽</Button>
-          </div>
-          {previewMode ? <div className='markdown-body' dangerouslySetInnerHTML={{ __html: marked(content) }} /> : <Textarea rows={10} placeholder='支援markdown語法' className='my-5' value={content} onChange={e => setContent(e.target.value)} id='editor' />}
-          <div className='flex justify-between'>
             <Select value={tech} onValueChange={(value) => setTech(value as typeof techOptions[number])}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="使用技術" />
@@ -91,6 +87,10 @@ const page: FC<Props> = ({ refresh }) => {
                 {techOptions.map(type => <SelectItem value={type} key={type}>{type}</SelectItem>)}
               </SelectContent>
             </Select>
+          </div>
+          {previewMode ? <div className='markdown-body' dangerouslySetInnerHTML={{ __html: marked(content) }} /> : <Textarea rows={10} placeholder='支援markdown語法' className='my-5' value={content} onChange={e => setContent(e.target.value)} id='editor' />}
+          <div className='flex justify-between'>
+            <Button onClick={() => setPreviewMode(!previewMode)} variant='ghost'>預覽</Button>
             <Button onClick={submit}>發文</Button>
           </div>
         </form>
