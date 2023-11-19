@@ -48,7 +48,7 @@ export class UserService {
 
     return findAll(
       this.user,
-      where,
+      where.length ? where : { checkable: true },
       { page, show }
     );
   }
