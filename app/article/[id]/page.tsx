@@ -87,7 +87,7 @@ const page: FC<Props> = (ctx) => {
               <ArticleCard article={article.data} className='w-full' changeMode={() => setEditMode(true)} />
           )}
         </section>
-        <aside className='md:sticky bottom-0 p-2 w-80 border rounded' style={{ top: 'calc(var(--header-height) + 1rem)' }}>
+        <aside className='md:sticky bottom-0 p-2 md:w-80 border rounded' style={{ top: 'calc(var(--header-height) + 1rem)' }}>
           <h3 className='text-xl font-bold'>推薦文章</h3>
           {pickupArticlePending ? <Image src={loading} alt='讀取中' priority /> : (
             <ul>

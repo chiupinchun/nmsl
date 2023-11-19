@@ -25,6 +25,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useToast } from '../ui/use-toast';
 
 
 const RouteList = ({ className, children, onLink = () => { } }: { className?: string; children?: React.ReactNode; onLink?: () => void; }) => {
@@ -45,6 +46,7 @@ interface Props { }
 const page: FC<Props> = ({ }) => {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
+  const { toast } = useToast();
 
   const [_, setToken] = useCookie('token');
   const logout: MouseEventHandler<HTMLAnchorElement> = (e) => {
@@ -53,6 +55,7 @@ const page: FC<Props> = ({ }) => {
     setToken(null);
     setOpenMemberPopover(false);
     setOpenMobileMenu(false);
+    toast({ description: '已成功登出' });
   };
 
   const [openMemberPopover, setOpenMemberPopover] = useState(false);

@@ -105,7 +105,7 @@ const page: FC<Props> = ({ searchParams }) => {
           <Button onClick={() => setShowPostBlock(!showPostBlock)} className='flex ms-auto w-fit'>
             <span className={cn(showPostBlock ? 'max-w-0' : 'max-w-2xl', 'overflow-hidden transition-all')}>發表文章</span>{showPostBlock ? <Minus width={18} height={18} /> : <Plus width={18} height={18} />}
           </Button>
-          <Post onSubmit={onPost} onCancel={() => setShowPostBlock(false)} className={cn(showPostBlock ? 'max-w-screen-2xl max-h-screen scale-100' : 'max-w-0 max-h-0 scale-0', 'mt-5 p-5 w-[90vw] md:w-[600px] box-border border rounded-2xl bg-slate-900 overflow-hidden transition-all')} />
+          <Post onSubmit={onPost} onCancel={() => setShowPostBlock(false)} className={cn(showPostBlock ? 'max-w-screen-2xl max-h-[75vh] scale-100' : 'max-w-0 max-h-0 scale-0', 'mt-5 p-5 w-[90vw] md:w-[600px] box-border border rounded-2xl bg-slate-900 overflow-hidden transition-all')} />
         </section>
       </div>
     </>

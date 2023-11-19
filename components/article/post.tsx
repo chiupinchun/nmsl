@@ -77,10 +77,10 @@ const page: FC<Props> = ({
 
   return (
     <>
-      <form onSubmit={e => e.preventDefault()} className={className}>
+      <form onSubmit={e => e.preventDefault()} className={cn('overflow-y-auto scroll-bar', className)}>
         <div className='md:flex'>
           <Select value={type} onValueChange={(value) => setType(value as typeof typeOptions[number])}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="md:w-[180px]">
               <SelectValue placeholder="Theme" />
             </SelectTrigger>
             <SelectContent>
@@ -88,22 +88,22 @@ const page: FC<Props> = ({
             </SelectContent>
           </Select>
 
-          <Input value={title} onChange={e => setTitle(e.target.value)} placeholder='標題' className='block ms-2'></Input>
+          <Input value={title} onChange={e => setTitle(e.target.value)} placeholder='標題' className='block mt-2 md:mt-0 md:ms-2'></Input>
         </div>
-        <div className='flex justify-between items-center my-5'>
+        <div className='md:flex justify-between items-center my-5'>
           <label htmlFor='editor'>
             文章內容
           </label>
           <Select value={tech} onValueChange={(value) => setTech(value as typeof techOptions[number])}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="mt-2 md:mt-0 md:w-[180px]">
               <SelectValue placeholder="使用技術" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className='max-h-48 overflow-y-auto scroll-bar'>
               {techOptions.map(type => <SelectItem value={type} key={type}>{type}</SelectItem>)}
             </SelectContent>
           </Select>
         </div>
-        {previewMode ? <div className='p-2 max-h-96 overflow-auto markdown-body scroll-bar' dangerouslySetInnerHTML={{ __html: marked(content) }} /> : <Textarea rows={10} placeholder='支援markdown語法' className='my-5' value={content} onChange={e => setContent(e.target.value)} id='editor' />}
+        {previewMode ? <div className='my-5 p-2 max-h-96 overflow-auto markdown-body scroll-bar' dangerouslySetInnerHTML={{ __html: marked(content) }} /> : <Textarea rows={10} placeholder='支援markdown語法' className='my-5' value={content} onChange={e => setContent(e.target.value)} id='editor' />}
         <div className='flex justify-between'>
           <Button onClick={() => setPreviewMode(!previewMode)} variant='ghost'>預覽</Button>
           <div>

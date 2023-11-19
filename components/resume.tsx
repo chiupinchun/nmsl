@@ -81,7 +81,7 @@ const resume: FC<ResumeProps> = ({ userInfo, children, editMode = false }) => {
       <Card>
         <CardHeader className='block md:flex flex-row justify-between items-center'>
           <CardTitle>自我介紹</CardTitle>
-          <Share url={`/resume/${userInfo.id}`} />
+          <Share url={`/resume/${userInfo.id}`} shareText={userInfo.description || `${userInfo.name}的履歷`} />
         </CardHeader>
 
         <CardContent className='md:flex flex-row-reverse justify-between items-stretch overflow-hidden'>
