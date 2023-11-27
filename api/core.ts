@@ -25,7 +25,7 @@ export const request = async <T = unknown>(
   if (!opt.headers) opt.headers = {};
   if (!opt.headers['content-type']) opt.headers['content-type'] = 'application/json';
 
-  if (opt.credentials === undefined) opt.credentials = 'same-origin';
+  if (opt.credentials === undefined) opt.credentials = 'include';
 
   if (typeof window === 'undefined') {
     const { cookies } = await import('next/headers');
