@@ -19,9 +19,9 @@ const page: FC<Props> = ({ searchParams }) => {
   const user = useSelector(state => state.user);
   const { toast } = useToast();
 
+  const { redirect } = searchParams;
   const checkLoginAndRedirect = () => {
     if (!user.id) return;
-    const { redirect } = searchParams;
     if (redirect) {
       if (redirect.includes('http')) location.href = redirect;
       else router.push(redirect);
