@@ -1,8 +1,8 @@
 "use client";
-import { getLessonById, viewCount } from '@/api/modules/lesson';
-import { marked } from '@/lib/utils';
+import { getLessonById, getLessons, viewCount } from '@/api/modules/lesson';
+import { cn, marked } from '@/lib/utils';
 import { redirect, useRouter } from 'next/navigation';
-import { useEffect, type FC } from 'react';
+import { useEffect, type FC, useState, useCallback } from 'react';
 import LessonHead from '@/components/lesson/head';
 import LessonList from '@/components/lesson/list';
 import Comments from '@/components/comments';
@@ -10,6 +10,7 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import { request } from '@/api/core';
 import { useToast } from '@/components/ui/use-toast';
 import useFetch from '@/hooks/useFetch';
+import Link from 'next/link';
 
 interface Props {
   params: { id: string; };
@@ -21,6 +22,15 @@ const page: FC<Props> = ({ params }) => {
   const { data: lesson, refresh } = useFetch(
     () => getLessonById(params.id, true)
   );
+
+  const { data: sameSeriesLessons } = useFetch(
+    () => lesson?.data?.id ? getLessons({ series: lesson?.data?.series, show: '99999' }) : Promise.resolve(null),
+    [lesson?.data?.id]
+  );
+
+  const isSameLesson = useCallback((id: number) => id >= 0 && id === lesson?.data?.id, [lesson?.data?.id]);
+
+  const [videoIdx, setVideoIdx] = useState(0);
 
   useEffect(() => {
     viewCount(params.id);
@@ -46,8 +56,32 @@ const page: FC<Props> = ({ params }) => {
     <>
       {lesson?.data && <LessonHead data={lesson.data}></LessonHead>}
       <div className='flex my-5 h-80 md:h-[630px]'>
-        {lesson?.data && <iframe width="100%" height="630" src={`https://www.youtube.com/embed/${lesson.data.src}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen loading='lazy' className='me-3 h-full'></iframe>}
-        <LessonList series={lesson?.data?.series} lessonId={lesson?.data?.id}></LessonList>
+        {lesson?.data && <iframe width="100%" height="630" src={`https://www.youtube.com/embed/${lesson.data.src?.split(',')?.[videoIdx]}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen loading='lazy' className='h-full'></iframe>}
+        {/* <LessonList title='影片列表'>
+          {lesson?.data?.src?.split(',')?.map((id, idx) => (
+            <li key={id}>
+              <a onClick={() => setVideoIdx(idx)} href='' className={cn('block px-3 py-1.5 hover:bg-slate-900', videoIdx === idx ? 'bg-slate-700' : null)}>第{idx + 1}集</a>
+            </li>
+          ))}
+        </LessonList> */}
+        <LessonList title={lesson?.data?.series}>
+          {sameSeriesLessons?.data?.map(item => (
+            <li key={item.id}>
+              <Link href={`/lesson/${item.id}`} className={cn('block px-3 py-1.5', isSameLesson(item.id) ? 'bg-slate-900' : 'hover:bg-slate-700')}>
+                {item.title}
+              </Link>
+              {isSameLesson(item.id) && (
+                <ul className='-ms-4 ps-8 list-[disclosure-closed]'>
+                  {lesson!.data.src?.split(',')?.map((id, idx) => (
+                    <li key={id}>
+                      <a onClick={() => setVideoIdx(idx)} href='' className={cn('block px-3 py-1.5 hover:bg-slate-700', videoIdx === idx ? 'bg-slate-900' : null)}>第{idx + 1}集</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </LessonList>
       </div>
       <div className='markdown-body' dangerouslySetInnerHTML={{ __html: marked(lesson?.data?.content) }}></div>
 
