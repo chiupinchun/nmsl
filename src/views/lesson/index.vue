@@ -6,7 +6,7 @@
   </div>
   <Table :cols="tableCols" :data-list="lessons?.data ?? []" @edit="setEditForm" @delete="delLesson" />
 
-  <el-dialog v-model="showEditDialog" :title="editingId ? '編輯課程' : '新增課程'" width="50%" _before-close="handleClose">
+  <el-dialog v-model="showEditDialog" :title="editingId ? '編輯課程' : '新增課程'" width="90%">
     <Form :key="`${editingId}`" :cols="editingId ? editCols : addCols" @submit="onFormSubmit"
       @cancel="showEditDialog = false" />
   </el-dialog>
