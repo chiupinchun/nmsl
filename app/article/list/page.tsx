@@ -1,5 +1,5 @@
 "use client";
-import { PostArticlePayload, getArticles, postArticle, techOptions, typeOptions } from '@/api/modules/article';
+import { Article, PostArticlePayload, getArticles, postArticle, techOptions, typeOptions } from '@/api/modules/article';
 import Post from '@/components/article/post';
 import useFetch from '@/hooks/useFetch';
 import { useState, type FC, useEffect } from 'react';
@@ -18,6 +18,7 @@ import BreadCrumbs from '@/components/breadcrumbs';
 import { Button } from '@/components/ui/button';
 import { Minus, Plus } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import { Waterfall } from '@/components/ui/waterfall';
 
 interface Props {
   searchParams: {
@@ -30,28 +31,9 @@ const page: FC<Props> = ({ searchParams }) => {
   const router = useRouter();
   const { toast } = useToast();
 
-  const [batch, setBatch] = useState(1);
-
-  const { data: articles, refresh } = useFetch(
-    () => getArticles({ ...searchParams, show: `${batch * 10}` }),
-    [batch, searchParams]
-  );
+  const [moreArticleTrigger, setMoreArticleTrigger] = useState(false);
 
   const [showPostBlock, setShowPostBlock] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const nearBottom = document.body.clientHeight - (window.scrollY + window.innerHeight) < 1500;
-      const hasMoreArticle = articles?.data && (articles.data.length > (batch - 2) * 10);
-
-      if (nearBottom && hasMoreArticle) {
-        setBatch(batch + 1);
-      }
-    };
-    window.addEventListener('scroll', onScroll);
-
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [articles?.data?.length, batch]);
 
   const linkTo = (query: Record<string, string>) => {
     let key: keyof typeof searchParams;
@@ -68,7 +50,7 @@ const page: FC<Props> = ({ searchParams }) => {
       toast({ description: '已成功送出。' });
 
       setShowPostBlock(false);
-      refresh();
+      setMoreArticleTrigger(!moreArticleTrigger);
 
       return true;
     } else toast({ variant: 'destructive', description: res?.message ?? '發生錯誤！' });
@@ -95,11 +77,16 @@ const page: FC<Props> = ({ searchParams }) => {
       <div className='flex justify-center'>
         <section>
           <BreadCrumbs routes={[{ title: 'IT好文' }]} />
-          <ul>
-            {articles?.data?.map(article => (
-              <li key={article.id}><ArticleCard article={article} className='mb-3 md:w-[640px]' inList /></li>
-            ))}
-          </ul>
+          <Waterfall
+            query={searchParams}
+            fetcher={getArticles}
+            trigger={moreArticleTrigger}
+            render={(articles) => (
+              articles?.map((article: Article) => (
+                <li key={article.id}><ArticleCard article={article} className='mb-3 md:w-[640px]' inList /></li>
+              ))
+            )}
+          />
         </section>
         <section className='fixed right-5 top-16'>
           <Button onClick={() => setShowPostBlock(!showPostBlock)} className='flex ms-auto w-fit'>

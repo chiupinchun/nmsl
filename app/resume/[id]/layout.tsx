@@ -2,6 +2,7 @@ import { getUserInfo } from '@/api/modules/user';
 import { editorDataWithoutHtml } from '@/lib/utils';
 import type { Metadata, ResolvingMetadata } from 'next';
 import BreadCrumbs from '@/components/breadcrumbs';
+import Resume from '@/components/resume';
 
 export async function generateMetadata(
   { params }: { params: { id: string; }; }
@@ -36,7 +37,11 @@ export default async function RootLayout({
     <h1 className='sr-only'>{user.name}的履歷</h1>
     <main className='container pt-3'>
       <BreadCrumbs routes={routes} />
-      {children}
+      <Resume userInfo={user} />
+      <section>
+        <h2 className='my-5 text-xl font-bold text-center'>{user.name}的發文</h2>
+        {children}
+      </section>
     </main>
   </>;
 }

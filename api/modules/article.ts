@@ -40,6 +40,7 @@ export interface Article {
 export const getArticles = (payload: {
   type?: typeof typeOptions[number];
   tech?: typeof techOptions[number];
+  user?: string;
   show?: string;
 } = {}) => {
   return request<Article[]>('/article', {
