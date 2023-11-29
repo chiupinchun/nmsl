@@ -6,6 +6,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { File } from 'buffer';
 import { RoleGuard } from './guard/role.guard';
 import { NoticeGateway } from 'src/notice/notice.gateway';
+import { Observable } from 'rxjs';
 
 // @UseGuards(RoleGuard)
 @Controller('test')
@@ -36,6 +37,26 @@ export class TestController {
   announce(@Query('message') message: string) {
     this.noticeGateway.announce(message);
     return { message };
+  }
+
+  @Get('observable')
+  observable() {
+    const observable = new Observable(observer => {
+      setTimeout(() => {
+        console.log(observer);
+        observer.next({ msg: 'nmsl' });
+      }, 2000);
+    });
+
+    const observer = {
+      next(data: { msg: string; }) {
+        console.log(data);
+      }
+    };
+
+    observable.subscribe(observer);
+
+    return 123;
   }
 
   @Post()

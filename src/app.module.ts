@@ -10,6 +10,7 @@ import { LessonModule } from './lesson/lesson.module';
 import { NoticeGateway } from './notice/notice.gateway';
 import { WishModule } from './wish/wish.module';
 import { ArticleModule } from './article/article.module';
+import { MemoModule } from './memo/memo.module';
 import 'dotenv/config';
 
 @Module({
@@ -36,7 +37,7 @@ import 'dotenv/config';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '7d' }
     }),
-    UserModule, TestModule, LessonModule, WishModule, ArticleModule
+    UserModule, TestModule, LessonModule, WishModule, ArticleModule, MemoModule
   ],
   controllers: [AppController],
   providers: [AppService, NoticeGateway],

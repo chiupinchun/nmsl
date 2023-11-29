@@ -2,7 +2,7 @@ import { Length } from "class-validator";
 import { CreateUserDto } from "src/user/dto/create-user.dto";
 
 export class CreateArticleDto {
-  user: CreateUserDto;
+  user: { id: string; };
 
   @Length(1, 100, { message: '文章標題應為1-100字' })
   title: string;
