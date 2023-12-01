@@ -61,7 +61,8 @@
 
 .markdown-body b,
 .markdown-body strong {
-  font-weight: 600;
+  text-shadow: 0 0 15px #fff, 0 0 20px rgb(203, 213, 225);
+  font-weight: 700;
 }
 
 .markdown-body dfn {
@@ -70,7 +71,7 @@
 
 .markdown-body h1 {
   margin: .67em 0;
-  font-weight: 600;
+  font-weight: 700;
   padding-bottom: .3em;
   font-size: 2em;
   border-bottom: 1px solid #21262d;
@@ -271,34 +272,34 @@
 .markdown-body h6 {
   margin-top: 24px;
   margin-bottom: 16px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.25;
 }
 
 .markdown-body h2 {
-  font-weight: 600;
+  font-weight: 700;
   padding-bottom: .3em;
   font-size: 1.5em;
   border-bottom: 1px solid #21262d;
 }
 
 .markdown-body h3 {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1.25em;
 }
 
 .markdown-body h4 {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1em;
 }
 
 .markdown-body h5 {
-  font-weight: 600;
+  font-weight: 700;
   font-size: .875em;
 }
 
 .markdown-body h6 {
-  font-weight: 600;
+  font-weight: 700;
   font-size: .85em;
   color: #7d8590;
 }
@@ -578,7 +579,7 @@
   margin-top: 16px;
   font-size: 1em;
   font-style: italic;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .markdown-body dl dd {
@@ -587,7 +588,7 @@
 }
 
 .markdown-body table th {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .markdown-body table th,
@@ -806,7 +807,7 @@
 }
 
 .markdown-body .csv-data th {
-  font-weight: 600;
+  font-weight: 700;
   background: #161b22;
   border-top: 0;
 }

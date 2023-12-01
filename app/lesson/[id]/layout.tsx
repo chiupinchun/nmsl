@@ -2,6 +2,7 @@ import { getLessonById } from '@/api/modules/lesson';
 import { editorDataWithoutHtml } from '@/lib/utils';
 import type { Metadata, ResolvingMetadata } from 'next';
 import BreadCrumbs from '@/components/breadcrumbs';
+import { redirect } from 'next/navigation';
 
 export async function generateMetadata(
   { params }: { params: { id: string; }; }
@@ -11,6 +12,7 @@ export async function generateMetadata(
 
   // fetch data
   const lesson = await getLessonById(id, true);
+  if (!lesson?.data?.id) redirect('/lesson/list');
   const { title, content, series, tags } = lesson?.data ?? {};
 
   return {
