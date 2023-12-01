@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { ChevronDown } from 'lucide-react';
+import Neighbor from '@/components/lesson/neighbor';
 
 interface Props {
   params: { id: string; };
@@ -37,40 +38,6 @@ const page: FC<Props> = ({ params, searchParams }) => {
   const isSameLesson = useCallback((id: number) => id >= 0 && id === lesson?.data?.id, [lesson?.data?.id]);
 
   const video = searchParams.video ? +searchParams.video : 0;
-
-  const [showNeighborBlock, setShowNeighborBlock] = useState(true);
-  const neighbor = useMemo(() => {
-    type LinkLike = { lesson: Lesson; video: number; };
-    const result: {
-      prev: LinkLike | null;
-      next: LinkLike | null;
-    } = {
-      prev: null,
-      next: null
-    };
-    if (lesson?.data?.id && sameSeriesLessons?.data?.length && video !== undefined) {
-      const videos: LinkLike[] = [];
-      let found = false;
-      for (let i = 0; i < sameSeriesLessons.data.length; i++) {
-        const currentLeson = sameSeriesLessons.data[i];
-        if (currentLeson?.src) {
-          const length = currentLeson.src.split(',').length;
-          for (let j = 0; j < length; j++) {
-            if (found) {
-              result.next = { lesson: currentLeson, video: j };
-              break;
-            } else if (currentLeson.id === lesson.data.id && j === video) {
-              result.prev = videos[videos.length - 1];
-              found = true;
-            }
-            videos.push({ lesson: currentLeson, video: j });
-          }
-        }
-      }
-    }
-
-    return result;
-  }, [lesson?.data?.id, sameSeriesLessons?.data?.length]);
 
   useEffect(() => {
     viewCount(params.id);
@@ -118,29 +85,8 @@ const page: FC<Props> = ({ params, searchParams }) => {
       </div>
 
       <nav className='sticky top-header-height border-b rounded border-slate-700 bg-background opacity-75'>
-        <ul className={cn('flex justify-between py-2 overflow-hidden transition-all duration-300', showNeighborBlock ? 'max-h-48 scale-y-100' : 'max-h-0 scale-y-0')}>
-          <li className='p-1 md:p-2 border rounded border-slate-700'>{neighbor.prev && (
-            <>
-              <h4 className='hidden md:block'>
-                {neighbor.prev.lesson.title} - 第{neighbor.prev.video + 1}集
-              </h4>
-              <Link href={`/lesson/${neighbor.prev.lesson.id}?video=${neighbor.prev.video}`} className='block me-auto py-1 md:py-2 w-fit'>&lt;&lt; 上一集</Link>
-            </>
-          )}</li>
-          <li className='p-1 md:p-2 border rounded border-slate-700'>{neighbor.next && (
-            <>
-              <h4 className='hidden md:block'>
-                {neighbor.next.lesson.title} - 第{neighbor.next.video + 1}集
-              </h4>
-              <Link href={`/lesson/${neighbor.next.lesson.id}?video=${neighbor.next.video}`} className='block ms-auto py-1 md:py-2 w-fit'>下一集 &gt;&gt;</Link>
-            </>
-          )}</li>
-        </ul>
-        <div className='flex justify-center absolute -bottom-2 w-full'>
-          <Button onClick={() => setShowNeighborBlock(!showNeighborBlock)} className='h-3'><ChevronDown className={cn(showNeighborBlock ? 'rotate-180' : '', 'transition')} /></Button>
-        </div>
+        <Neighbor lesson={lesson?.data} list={sameSeriesLessons?.data} video={video} />
       </nav>
-
 
       <div className='markdown-body mt-5' dangerouslySetInnerHTML={{ __html: marked(lesson?.data?.content) }}></div>
 
