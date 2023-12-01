@@ -63,7 +63,7 @@ const page: FC<Props> = ({ }) => {
                 <li>2022年8月從前端工程師培訓機構結訓。</li>
                 <li>2022年9月於1111人力銀行任職前端工程師。</li>
                 <li>2023年6月起開始管理5人小團隊。</li>
-                <li>2023年8月正式升為主任。</li>
+                <li className='hidden'>2023年8月正式升為主任。</li>
                 <li>略懂Vue3源碼，精通Nuxt、Vue、Next、React、Nest、TypeScript的單詞拼寫。</li>
               </ul>
             </div>
