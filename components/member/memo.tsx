@@ -118,7 +118,7 @@ const page: FC<Props> = ({ }) => {
                         <CardDescription>{new Date(memo.createTime).toLocaleDateString()}</CardDescription>
                       </CardHeader>
                       <CardContent>
-                        {memo.content}
+                        <p>{memo.content}</p>
                       </CardContent>
                     </Card>
                   </li>

@@ -72,7 +72,7 @@ const page: FC<Props> = ({ searchParams }) => {
           {lessons?.data?.map(lesson => (
             <li key={lesson.id} className='flex p-2 my-3 rounded-md shadow-xl shadow-slate-500'>
               <Link href={`/lesson/${lesson.id}`} target='_self' className='flex justify-center items-center me-3 overflow-hidden'>
-                <img width={280} height={210} src={`http://img.youtube.com/vi/${lesson.src}/0.jpg`} alt={lesson.title} className='transition hover:scale-110'></img>
+                <img width={280} height={210} src={`http://img.youtube.com/vi/${lesson.src?.split(',')?.[0]}/0.jpg`} alt={lesson.title} className='transition hover:scale-110'></img>
               </Link>
               <div className='flex flex-col justify-around w-full me-3'>
                 <div className='flex justify-between items-center'>

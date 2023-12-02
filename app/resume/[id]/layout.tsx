@@ -3,6 +3,7 @@ import { editorDataWithoutHtml } from '@/lib/utils';
 import type { Metadata, ResolvingMetadata } from 'next';
 import BreadCrumbs from '@/components/breadcrumbs';
 import Resume from '@/components/resume';
+import { redirect } from 'next/navigation';
 
 export async function generateMetadata(
   { params }: { params: { id: string; }; }
@@ -12,6 +13,9 @@ export async function generateMetadata(
 
   // fetch data
   const { data: user } = await getUserInfo(id, true);
+  if (!user?.id) {
+    redirect('/resume/notallow');
+  }
 
   return {
     title: `${user.name}的履歷｜NMSL檸檬森林｜專業前端培訓課程`,

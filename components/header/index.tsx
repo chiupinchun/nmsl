@@ -115,7 +115,7 @@ const page: FC<Props> = ({ }) => {
                         <li><a onClick={logout} className='block p-2 border rounded border-slate-500 cursor-pointer'>登出</a></li>
                       </ul>
                     </> :
-                    <Link href='/login'>點我登入</Link>
+                    <Link onClick={() => setOpenMobileMenu(false)} href='/login'>點我登入</Link>
                 }
               </SheetHeader>
 
