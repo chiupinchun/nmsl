@@ -1,6 +1,6 @@
 <template>
   <el-form :model="form" label-width="120px" label-position="top">
-    <el-form-item v-for="(col, idx) in cols" :label="col.text" >
+    <el-form-item v-for="(col, idx) in cols" :label="col.text">
       <el-select v-if="col.type === 'select'" v-model="form[col.model]" :placeholder="col.placeholder">
         <el-option v-for="opt in col.options" :label="col.text" :value="opt.value" />
       </el-select>

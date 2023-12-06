@@ -4,16 +4,23 @@ export const request = async <T = unknown>(
   url: string,
   opt: Omit<RequestInit, 'body'> & {
     method?: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
+    query?: Record<string, string>;
     body?: Record<string, any> | string;
     headers?: Record<string, string>;
   } = {}
 ): Promise<{
   data: T;
+  totalRecord?: number;
+  totalPage?: number;
   msg: string;
   status: number;
   success: boolean;
 }> => {
   if (!url.includes('http')) url = import.meta.env.VITE_API_BASE_URL + url;
+
+  if (opt.query) {
+    url += (url.includes('?') ? '&' : '?') + Object.keys(opt.query).map(key => `${key}=${opt.query![key]}`).join('&');
+  }
 
   if (opt.body) opt.body = JSON.stringify(opt.body);
 

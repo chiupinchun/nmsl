@@ -1,11 +1,11 @@
 <template>
-  <Search title="課程編輯" :cols="searchCols" @submit="query => $router.push({ query })" />
+  <Search title="課程編輯" :cols="[]" @submit="query => $router.push({ query })" />
   <div class="tool-bar" style="padding: 0 2.5rem;">
     <div class="mx-auto"></div>
     <el-button @click="editingId = undefined">新增</el-button>
   </div>
-  <Table :cols="tableCols" :data-list="lessons?.data ?? []" @edit="setEditForm" @delete="delLesson" />
-  <el-pagination layout="prev, pager, next" :total="lessons?.totalRecord"
+  <Table :cols="tableCols" :data-list="announces?.data ?? []" @edit="setEditForm" @delete="delAnnounce" />
+  <el-pagination layout="prev, pager, next" :total="announces?.totalRecord"
     @current-change="(page: number) => $router.push({ query: { ...$route.query, page } })" />
 
   <el-dialog v-model="showEditDialog" :title="editingId ? '編輯課程' : '新增課程'" width="90%">
@@ -15,7 +15,6 @@
 </template>
 
 <script lang="ts" setup>
-import type { FormCol } from '@/types/form';
 import { request, useFetch } from '@/api/core';
 import Search from '@/components/admin/search.vue';
 import Table from '@/components/admin/table.vue';
@@ -27,35 +26,19 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
-const searchCols: FormCol[] = [
+const { data: announces, refresh } = useFetch(
+  () => request<any[]>('/announce', { query: route.query as Record<string, string> }),
   {
-    text: '分類',
-    model: 'series'
-  }
-];
-
-const { data: lessons, refresh } = useFetch(
-  () => request<any[]>('/lesson', { query: route.query as Record<string, string> }),
-  {
-    watch: [
-      () => route.query.series,
-      () => route.query.page
-    ]
+    watch: [() => route.query.page]
   }
 );
 
 const tableCols = {
   id: 'id',
-  series: "合集",
-  author: "講師",
   title: "標題",
   content: "內文",
-  src: "連結",
-  tags: "tags",
-  weight: "權重",
-  goods: '點讚數',
-  views: '曝光數',
   createTime: "創建時間",
+  updateTime: "創建時間"
 };
 
 const editingId = ref<number | null | undefined>(null);
@@ -85,7 +68,7 @@ const onResult = async (promise: ReturnType<typeof request>) => {
 
 const onFormSubmit = (data: Record<string, unknown>) => {
   if (editingId.value === null) return;
-  const url = `/lesson/${editingId.value ?? ''}`;
+  const url = `/announce/${editingId.value ?? ''}`;
   const promise = request(url, {
     body: data,
     method: editingId.value ? 'PATCH' : 'POST'
@@ -93,10 +76,10 @@ const onFormSubmit = (data: Record<string, unknown>) => {
   onResult(promise);
 };
 
-const delLesson = (id: number) => {
+const delAnnounce = (id: number) => {
   const sure = confirm(`確定要刪除id為${id}的教程嗎？`);
   if (!sure) return;
-  const promise = request('/lesson/' + id, {
+  const promise = request('/announce/' + id, {
     method: 'DELETE'
   });
   onResult(promise);

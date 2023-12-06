@@ -2,6 +2,7 @@
   <div :style="{ width: collapse ? '30px' : '150px', transition: '0.5s' }"></div>
   <ul class="sidebar" :class="{ collapse }">
     <li><router-link to="/lesson">{{ collapse ? '' : '課程編輯' }}</router-link></li>
+    <li><router-link to="/announce">{{ collapse ? '' : '網站公告' }}</router-link></li>
 
     <span @click="collapse = !collapse" class="collapse">↔</span>
   </ul>
