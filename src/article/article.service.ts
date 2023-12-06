@@ -9,7 +9,8 @@ import findAll from 'src/global/find-all';
 @Injectable()
 export class ArticleService {
   constructor(
-    @InjectRepository(Article) private readonly article: Repository<Article>
+    @InjectRepository(Article)
+    private readonly article: Repository<Article>
   ) { }
 
   create(createArticleDto: CreateArticleDto) {

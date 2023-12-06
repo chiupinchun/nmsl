@@ -7,8 +7,8 @@ export class AppController {
 
   @Get()
   getHello() {
-    return 'https://drive.google.com/drive/u/0/folders/1i55wJq6qVYZ6280EyOW8N6EqZrr_EZSb';
-    return this.appService.getHello();
+    return 'nmsl';
+    // return this.appService.getHello();
   }
 
   @Post('test')

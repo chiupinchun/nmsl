@@ -11,6 +11,7 @@ import { NoticeGateway } from './notice/notice.gateway';
 import { WishModule } from './wish/wish.module';
 import { ArticleModule } from './article/article.module';
 import { MemoModule } from './memo/memo.module';
+import { AnnounceModule } from './announce/announce.module';
 import 'dotenv/config';
 
 @Module({
@@ -37,7 +38,7 @@ import 'dotenv/config';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '7d' }
     }),
-    UserModule, TestModule, LessonModule, WishModule, ArticleModule, MemoModule
+    UserModule, TestModule, LessonModule, WishModule, ArticleModule, MemoModule, AnnounceModule
   ],
   controllers: [AppController],
   providers: [AppService, NoticeGateway],
