@@ -5,7 +5,7 @@
     <el-button @click="editingId = undefined">新增</el-button>
   </div>
   <Table :cols="tableCols" :data-list="lessons?.data ?? []" @edit="setEditForm" @delete="delLesson" />
-  <el-pagination layout="prev, pager, next" :total="lessons?.totalRecord"
+  <el-pagination layout="prev, pager, next" :page-count="lessons?.totalPage"
     @current-change="(page: number) => $router.push({ query: { ...$route.query, page } })" />
 
   <el-dialog v-model="showEditDialog" :title="editingId ? '編輯課程' : '新增課程'" width="90%">
