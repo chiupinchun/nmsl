@@ -16,4 +16,6 @@ export class CreateUserDto {
   @Length(1, 20, { message: '暱稱應為1-20字' })
   @ApiProperty({ example: 'Hato' })
   name: string;
+
+  testing?: boolean;
 }

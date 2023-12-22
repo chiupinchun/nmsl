@@ -48,8 +48,10 @@ export class UserController {
 
     const token = user.id && await this.jwtService.signAsync({ id: user.id, account: user.account });
     if (token) res.cookie('token', token);
-
     delete user.password;
+
+    this.userService.update(user.id, { ...user, activity: user.activity + 1 });
+
     return user;
   }
 

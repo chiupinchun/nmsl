@@ -54,4 +54,10 @@ export class User {
 
   @Column({ type: 'timestamp' })
   createTime: Date;
+
+  @Column({ type: 'int', default: 0, select: false })
+  activity: number;
+
+  @Column({ type: 'bool', default: false, select: false })
+  testing: boolean;
 }

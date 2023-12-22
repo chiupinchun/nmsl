@@ -18,4 +18,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
 
   description: string;
 
+  // ------
+
+  activity: number;
 }

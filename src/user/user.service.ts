@@ -33,6 +33,7 @@ export class UserService {
       page = 1,
       show = 10,
       keyword,
+      order = '-activity',
       ...others
     } = condition;
 
@@ -49,7 +50,7 @@ export class UserService {
     return findAll(
       this.user,
       where.length ? where : { checkable: true },
-      { page, show }
+      { page, show, order }
     );
   }
 
