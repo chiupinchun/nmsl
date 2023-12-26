@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const marked = (source?: string): string => {
   if (!source) return '';
-  return _marked(source.replaceAll('<', '＜').replaceAll('>', '＞'));
+  return _marked(source.replaceAll('<', '＜'));
 };
 
 /**

@@ -42,7 +42,7 @@ export const Waterfall: FC<Props> = ({
     <>
       <ul className={cn(className)}>
         {list?.data && render(list.data)}
-        {pending && <Image src={loading} alt='讀取中' />}
+        {pending && <Image src={loading} alt='讀取中' priority />}
       </ul>
     </>
   );
