@@ -19,3 +19,9 @@ export const editorDataWithoutHtml = (source?: string) => {
   if (!source) return '';
   return source.replace(/<(\/)?[a-z0-9]+([^>]+)?(src="[^"]+")?([^>]+)?>/ig, '').replaceAll('<', '&gt;');
 };
+
+// export const isSameDay = (...dates: (Date | string)[]) => {
+//   if (!dates.length) return true;
+//   const date = +new Date(dates[0]);
+//   return dates.every(item => date === +new Date(item));
+// };

@@ -9,6 +9,7 @@ import { useSelector } from '@/store';
 import { useState, type FC } from 'react';
 import Memo from '@/components/member/memo';
 import { Waterfall } from '@/components/ui/waterfall';
+import Calendar from '@/components/member/calendar';
 
 interface Props { }
 const page: FC<Props> = ({ }) => {
@@ -32,9 +33,11 @@ const page: FC<Props> = ({ }) => {
         <Button onClick={save} className='w-full'>{editMode ? '儲存' : '編輯'}</Button>
       </Resume>
       <section className='md:flex flex-row-reverse mt-5'>
-        <aside className='md:ms-10 md:w-1/2'>
+        <aside className='md:ms-10 md:w-1/2 space-y-5'>
           <h2 className='mb-2 text-xl font-bold text-center'>備忘錄</h2>
           <Memo />
+          <h2 className='mb-2 text-xl font-bold text-center'>行事曆</h2>
+          <Calendar />
         </aside>
         <aside className='md:w-1/2'>
           <h2 className='mb-2 text-xl font-bold text-center'>我的發文</h2>
