@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
-import { TestModule } from './test/test.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
@@ -12,6 +11,7 @@ import { WishModule } from './wish/wish.module';
 import { ArticleModule } from './article/article.module';
 import { MemoModule } from './memo/memo.module';
 import { AnnounceModule } from './announce/announce.module';
+import { CalendarModule } from './calendar/calendar.module';
 import 'dotenv/config';
 
 @Module({
@@ -38,7 +38,7 @@ import 'dotenv/config';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '7d' }
     }),
-    UserModule, TestModule, LessonModule, WishModule, ArticleModule, MemoModule, AnnounceModule
+    UserModule, LessonModule, WishModule, ArticleModule, MemoModule, AnnounceModule, CalendarModule
   ],
   controllers: [AppController],
   providers: [AppService, NoticeGateway],
